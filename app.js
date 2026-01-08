@@ -103,15 +103,16 @@ main().then(() => {
         res.render("error.ejs" , {err}); 
         
     });   
-   if (require.main === module) {
-  app.listen(3000, () => {
-    console.log('Server is running locally on port 3000');
-  });
-}
 }).catch((err)=>{
     console.log("Database connection failed:", err);
     process.exit(1); // Exit the process if connection fails
 });
+
+if (require.main === module) {
+  app.listen(8080, () => {
+    console.log('Server is running locally on port 3000');
+  });
+}
 
 //Export app for vercel
 module.exports=app;
