@@ -101,7 +101,7 @@ app.use("/", generalRoutes);
 app.use("/favorites", favoriteRoutes);
 
 // --- 6. Error Handling ---
-app.all("*", (req, res, next) => {
+app.use((req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
 });
 
