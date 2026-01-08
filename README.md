@@ -12,14 +12,22 @@ Wanderland ✈️
 [Feature 5]: [e.g., "Responsive design for mobile and desktop"]
 💻 Technologies Used
 Frontend
-[e.g., React]
-[e.g., CSS / Tailwind CSS / Bootstrap]
-[e.g., Mapbox API]
+[e.g., EJS templates]
+[e.g., CSS / Bootstrap]
+[e.g., Cloudinary for image uploads]
 Backend
 [e.g., Node.js]
 [e.g., Express.js]
 [e.g., MongoDB with Mongoose]
 [e.g., Passport.js for authentication]
+
+## Environment Variables
+
+- `ATLASDB_URL`: MongoDB connection string (e.g., MongoDB Atlas URL or local MongoDB URL)
+- `SECRET`: Session secret key
+- `BREVO_API_KEY`: Brevo (Sendinblue) API key for email
+- `BREVO_SENDER_EMAIL`: Email address for sending OTP emails
+
 🛠️ How to Run Locally
 To get a local copy up and running, follow these simple steps.
 

@@ -4,7 +4,7 @@ const User = require("../models/user.js");
 const wrapAsync = require("../util/wrapAsync.js");
 const passport = require("passport");
 const { saveredircturl } = require("../middleware.js");
-const { PostUser, LoginUser, LogoutUser } = require("../controllers/user.js");
+const { PostUser, LoginUser, LogoutUser, forgotPassword, resetPassword } = require("../controllers/user.js");
 const { resendOTP, verifyOTP } = require("../controllers/otp.js");
 
 
@@ -37,4 +37,19 @@ router.get("/resend-otp", wrapAsync(resendOTP));
 
 //Logout logic
 router.get("/logout", LogoutUser);
+
+//Forgot password routes
+router.route("/forgot-password")
+.get((req, res) => {
+    res.render("users/forgot-password");
+})
+.post(wrapAsync(forgotPassword));
+
+//Reset password routes
+router.route("/reset-password")
+.get((req, res) => {
+    res.render("users/reset-password");
+})
+.post(wrapAsync(resetPassword));
+
 module.exports = router;

@@ -63,6 +63,22 @@
 @media (max-width: 768px) {
   .favorite-overlay {
     opacity: 1 !important;
+    background: transparent !important;
+  }
+  .card-img-overlay {
+    background: transparent !important;
+  }
+  .card-img-overlay:hover {
+    background-color: transparent !important;
+  }
+  .favorite-btn {
+    background-color: transparent !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    width: 45px !important;
+    height: 45px !important;
   }
 }
 </style>
@@ -77,7 +93,7 @@
               <%
                 const isFavorited = currentUser.favorites && currentUser.favorites.some(fav => fav.toString() === listing._id.toString());
               %>
-              <div class="card-img-overlay d-flex justify-content-end align-items-start p-3 favorite-overlay" style="top: 10px; right: 10px; opacity: 0; transition: opacity 0.3s ease;">
+              <div class="d-flex justify-content-end align-items-start p-3 favorite-overlay" style="position: absolute; top: 10px; right: 10px; opacity: 0; transition: opacity 0.3s ease;">
                 <form action="/favorites/<%= listing._id %>/<%= isFavorited ? 'remove' : 'add' %>" method="POST" class="favorite-form">
                   <button type="submit" class="btn btn-sm favorite-btn <%= isFavorited ? 'favorited' : '' %>" data-listing-id="<%= listing._id %>" data-is-favorited="<%= isFavorited %>">
                     <i class="fas fa-heart <%= isFavorited ? 'text-danger' : 'text-muted' %>"></i>

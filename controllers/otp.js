@@ -84,30 +84,42 @@ module.exports.verifyOTP = async (req, res) => {
         user.otp = undefined;
         user.otpExpires = undefined;
 
-        // If this is signup verification, mark as verified
-        if (!req.session.pendingLoginVerification) {
+        // Handle different verification types
+        if (req.session.pendingPasswordReset) {
+            // Password reset verification
+            await user.save();
+            delete req.session.pendingPasswordReset;
+            req.flash("success", "OTP verified. Please set your new password.");
+            return res.redirect("/reset-password");
+        } else if (req.session.pendingLoginVerification) {
+            // Login verification (already verified user trying to log in)
+            await user.save();
+            delete req.session.pendingVerificationEmail;
+            delete req.session.pendingLoginVerification;
+            req.login(user, (err) => {
+                if (err) {
+                    console.log('Login error:', err);
+                    req.flash("error", err.message);
+                    return res.redirect("/verify-otp");
+                }
+                req.flash("success", "Login successful. Welcome back to WanderLand!");
+                res.redirect(res.locals.redirectUrl || "/listings");
+            });
+        } else {
+            // Signup verification
             user.isVerified = true;
+            await user.save();
+            delete req.session.pendingVerificationEmail;
+            req.login(user, (err) => {
+                if (err) {
+                    console.log('Login error:', err);
+                    req.flash("error", err.message);
+                    return res.redirect("/verify-otp");
+                }
+                req.flash("success", "Email verified successfully. Welcome to WanderLand!");
+                res.redirect(res.locals.redirectUrl || "/listings");
+            });
         }
-
-        await user.save();
-
-        // Clear session
-        delete req.session.pendingVerificationEmail;
-        delete req.session.pendingLoginVerification;
-
-        req.login(user, (err) => {
-            if (err) {
-                console.log('Login error:', err);
-                req.flash("error", err.message);
-                return res.redirect("/verify-otp");
-            }
-
-            const successMessage = req.session.pendingLoginVerification ?
-                "Login successful. Welcome back to WanderLand!" :
-                "Email verified successfully. Welcome to WanderLand!";
-            req.flash("success", successMessage);
-            res.redirect(res.locals.redirectUrl || "/listings");
-        });
     } catch (error) {
         console.error('Verification error:', error);
         req.flash("error", "Verification failed");
