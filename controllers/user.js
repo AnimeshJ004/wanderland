@@ -39,22 +39,57 @@ module.exports.PostUser = async (req, res) => {
     }
 };
 
-//Login logic
-module.exports.LoginUser = (req, res) => {
-    if (!req.user.isVerified) {
+module.exports.LoginUser = async (req, res, next) => {
+    try {
+        // 1. Capture user info BEFORE logging out
+        const user = req.user;
+        const userEmail = user.email;
+        const isVerified = user.isVerified;
+
+        // 2. Generate and Save OTP
+        const otp = otpGenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false });
+        user.otp = otp;
+        user.otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+        await user.save();
+        
+        // 3. Send Email
+        await sendOTP(userEmail, otp);
+
+        // 4. Logout to prevent access until OTP verified
         req.logout((err) => {
             if (err) {
-                console.log('Logout error:', err);
+                return next(err);
             }
-            req.flash("error", "Please verify your email before logging in.");
-            return res.redirect("/login");
+
+            // 5. Re-establish session context for verification
+            req.session.pendingVerificationEmail = userEmail;
+
+            if (isVerified) {
+                // Verified user -> 2FA Login Mode
+                req.session.pendingLoginVerification = true;
+                req.flash("success", "OTP sent. Please verify to complete login.");
+            } else {
+                // Unverified user -> Signup Verification Mode
+                req.flash("error", "Email not verified. A new OTP has been sent.");
+            }
+
+            // 6. FORCE SAVE session before redirecting
+            // This prevents the "Session expired" error on the OTP page
+            req.session.save((err) => {
+                if (err) {
+                    console.error("Session save error:", err);
+                    return next(err);
+                }
+                res.redirect("/verify-otp");
+            });
         });
-    } else {
-        req.flash("success", "Welcome back to WanderLand!");
-        res.redirect(res.locals.redirectUrl || "/listings");
+
+    } catch (error) {
+        console.error("Login Error:", error);
+        req.flash("error", "Something went wrong. Please try again.");
+        res.redirect("/login");
     }
 };
-
 //Logout logic
 module.exports.LogoutUser = (req, res, next) => {
     req.logout(function(err) {

@@ -117,7 +117,11 @@ module.exports.verifyOTP = async (req, res) => {
                     return res.redirect("/verify-otp");
                 }
                 req.flash("success", "Email verified successfully. Welcome to WanderLand!");
-                res.redirect(res.locals.redirectUrl || "/listings");
+                req.session.save((err) => {
+                    if (err) console.log("Session save error:", err);
+                    res.redirect(res.locals.redirectUrl || "/listings");
+                });
+            
             });
         }
     } catch (error) {
