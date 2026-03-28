@@ -1,5 +1,128 @@
-<%-layout("/layouts/boilerplate")%>
+<%- layout("/layouts/boilerplate") %>
 <style>
+/* Image Gallery Carousel */
+.show-carousel {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  margin-bottom: 1.5rem;
+}
+
+.show-carousel .carousel-item img {
+  width: 100%;
+  height: 55vh;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.show-carousel .carousel-control-prev,
+.show-carousel .carousel-control-next {
+  width: 50px;
+  height: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.3s ease;
+  margin: 0 12px;
+}
+
+.show-carousel:hover .carousel-control-prev,
+.show-carousel:hover .carousel-control-next {
+  opacity: 1;
+}
+
+.show-carousel .carousel-control-prev:hover,
+.show-carousel .carousel-control-next:hover {
+  background: rgba(0, 0, 0, 0.75);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.show-carousel .carousel-indicators {
+  bottom: 12px;
+}
+
+.show-carousel .carousel-indicators button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 4px;
+  border: 2px solid white;
+  background: transparent;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.show-carousel .carousel-indicators button.active {
+  background: white;
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* Thumbnail strip */
+.thumbnail-strip {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  padding: 4px 0;
+}
+
+.thumbnail-strip::-webkit-scrollbar {
+  height: 4px;
+}
+
+.thumbnail-strip::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.thumbnail-strip img {
+  width: 90px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.thumbnail-strip img:hover,
+.thumbnail-strip img.active {
+  opacity: 1;
+  border-color: #fe424d;
+  transform: scale(1.05);
+}
+
+/* Book Button */
+.book-btn {
+  background: linear-gradient(135deg, #ff5a5f, #e63946) !important;
+  border: none !important;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 18px rgba(255, 90, 95, 0.35);
+  color: white !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.book-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(255, 90, 95, 0.5);
+  background: linear-gradient(135deg, #e63946, #c0392b) !important;
+}
+
+.book-btn i {
+  font-size: 1.1rem;
+}
+
 /* Favorite button hover effect */
 .listing-card:hover .favorite-overlay {
   opacity: 1;
@@ -80,51 +203,129 @@
     width: 45px !important;
     height: 45px !important;
   }
+  .show-carousel .carousel-item img {
+    height: 40vh;
+  }
+  .show-carousel .carousel-control-prev,
+  .show-carousel .carousel-control-next {
+    opacity: 0.7;
+  }
 }
 </style>
-   <div class="row mt-3 mb-4">
-    <div class="col-10 offset-1">
-    
-<h1 class="show-title"><%= listing.title %></h1>
-    <div class="card show-card listing-card">
-          <div class="position-relative">
-            <img src="<%= listing.image.url %>" alt="listing_image" class="card-img-top show-img">
-            <% if(currentUser) { %>
-              <%
-                const isFavorited = currentUser.favorites && currentUser.favorites.some(fav => fav.toString() === listing._id.toString());
-              %>
-              <div class="d-flex justify-content-end align-items-start p-3 favorite-overlay" style="position: absolute; top: 10px; right: 10px; opacity: 0; transition: opacity 0.3s ease;">
-                <form action="/favorites/<%= listing._id %>/<%= isFavorited ? 'remove' : 'add' %>" method="POST" class="favorite-form">
-                  <button type="submit" class="btn btn-sm favorite-btn <%= isFavorited ? 'favorited' : '' %>" data-listing-id="<%= listing._id %>" data-is-favorited="<%= isFavorited %>">
-                    <i class="fas fa-heart <%= isFavorited ? 'text-danger' : 'text-muted' %>"></i>
-                  </button>
-                </form>
-              </div>
+
+<div class="row mt-3 mb-4">
+  <div class="col-10 offset-1">
+
+    <h1 class="show-title"><%= listing.title %></h1>
+
+    <!-- Image Carousel -->
+    <% const allImages = (listing.images && listing.images.length > 0) ? listing.images : [listing.image]; %>
+
+    <% if (allImages.length > 1) { %>
+      <div id="showCarousel" class="carousel slide show-carousel" data-bs-ride="carousel">
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+          <% allImages.forEach((img, idx) => { %>
+            <button type="button" data-bs-target="#showCarousel" data-bs-slide-to="<%= idx %>" class="<%= idx === 0 ? 'active' : '' %>" aria-label="Slide <%= idx + 1 %>"></button>
+          <% }); %>
+        </div>
+
+        <!-- Slides -->
+        <div class="carousel-inner">
+          <% allImages.forEach((img, idx) => { %>
+            <div class="carousel-item <%= idx === 0 ? 'active' : '' %>">
+              <img src="<%= img.url %>" alt="<%= listing.title %> - Image <%= idx + 1 %>" class="d-block w-100">
+            </div>
+          <% }); %>
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#showCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#showCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+      <!-- Thumbnail Strip -->
+      <div class="thumbnail-strip">
+        <% allImages.forEach((img, idx) => { %>
+          <img src="<%= img.url %>" alt="Thumbnail <%= idx + 1 %>" class="<%= idx === 0 ? 'active' : '' %>" data-bs-target="#showCarousel" data-bs-slide-to="<%= idx %>" onclick="document.querySelectorAll('.thumbnail-strip img').forEach(t => t.classList.remove('active')); this.classList.add('active');">
+        <% }); %>
+      </div>
+    <% } else { %>
+      <div class="card show-card listing-card">
+        <div class="position-relative">
+          <img src="<%= listing.image.url %>" alt="listing_image" class="card-img-top show-img">
+        </div>
+      </div>
+    <% } %>
+
+    <!-- Favorite Button -->
+    <% if(currentUser) { %>
+      <%
+        const isFavorited = currentUser.favorites && currentUser.favorites.some(fav => fav.toString() === listing._id.toString());
+      %>
+      <div class="d-flex justify-content-end mb-3">
+        <form action="/favorites/<%= listing._id %>/<%= isFavorited ? 'remove' : 'add' %>" method="POST" class="favorite-form">
+          <button type="submit" class="btn btn-sm favorite-btn <%= isFavorited ? 'favorited' : '' %>" data-listing-id="<%= listing._id %>" data-is-favorited="<%= isFavorited %>">
+            <i class="fas fa-heart <%= isFavorited ? 'text-danger' : 'text-muted' %>"></i>
+          </button>
+        </form>
+      </div>
+    <% } %>
+
+    <!-- Listing Details Card -->
+    <div class="card show-card">
+      <div class="card-body show-card-body">
+        <p class="card-text show-details">
+          <i class="show-owner"><b>Owned by: <%= listing.owner ? listing.owner.username : 'Unknown' %></b></i>
+          <br><br>
+          <span class="show-description"><%= listing.description %></span><br>
+          <span class="show-price">&#8377; <%= listing.price.toLocaleString("en-IN") %></span> <small class="text-muted">/ night</small><br>
+          <span class="show-location"><i class="fas fa-map-marker-alt"></i> <%= listing.location %>, <%= listing.country %></span>
+        </p>
+
+        <!-- Book on Airbnb Button -->
+        <div class="mt-3 mb-2">
+          <% if (currentUser) { %>
+            <% if (listing.bookingUrl) { %>
+              <a href="<%= listing.bookingUrl %>" target="_blank" rel="noopener noreferrer" class="book-btn">
+                <i class="fa-solid fa-external-link-alt"></i> Book on Airbnb
+              </a>
+            <% } else { %>
+              <a href="https://www.airbnb.com/s/<%= encodeURIComponent(listing.location + ', ' + listing.country) %>" target="_blank" rel="noopener noreferrer" class="book-btn">
+                <i class="fa-solid fa-external-link-alt"></i> Find on Airbnb
+              </a>
             <% } %>
-          </div>
-          <div class="card-body show-card-body">
-              <p class="card-text show-details">
-                <i class="show-owner"><b>Owned by: <%= listing.owner ? listing.owner.username : 'Unknown' %></b></i>
-                <br><br>
-                <span class="show-description"><%= listing.description %></span><br>
-                <span class="show-price">&#8377; <%= listing.price.toLocaleString("en-IN") %></span><br>
-                <span class="show-location"><i class="fas fa-map-marker-alt"></i> <%= listing.location %>, <%= listing.country %></span>
-              </p>
-          </div>
+          <% } else { %>
+            <a href="/login" class="book-btn" style="background: linear-gradient(135deg, #888, #666) !important; box-shadow: 0 4px 18px rgba(0,0,0,0.2);">
+              <i class="fa-solid fa-lock"></i> Login to Book
+            </a>
+          <% } %>
+        </div>
+      </div>
     </div>
+
+    <!-- Edit / Delete Buttons -->
     <% if(currentUser && currentUser._id.equals(listing.owner._id)) { %>
     <div class="btns-show mb-4">
-      <a href="/listings/<%=listing._id%>/edit" class="btn btn-primary edit-btn">Edit</a>
-      <form method="POST" action="/listings/<%=listing._id%>?_method=Delete" class="d-inline">
-          <button class="btn btn-danger edit-btn-delete">Delete</button>
-       </form>
+      <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary edit-btn">Edit</a>
+      <form method="POST" action="/listings/<%= listing._id %>?_method=Delete" class="d-inline">
+        <button class="btn btn-danger edit-btn-delete">Delete</button>
+      </form>
     </div>
     <% } %>
+
+    <!-- Reviews Section -->
     <div>
       <% if(currentUser) { %>
         <hr class="review-divider"/>
       <h4 class="review-title">Leave a Review</h4>
-      <form method="POST" action="/listings/<%=listing._id%>/reviews" novalidate class="needs-validation review-form mb-4" >
+      <form method="POST" action="/listings/<%= listing._id %>/reviews" novalidate class="needs-validation review-form mb-4" >
       <div class="mb-3">
         <label for="rating" class="form-label review-label">Rating</label>
           <fieldset class="starability-slot">
@@ -152,7 +353,7 @@
       </form>
        <% } %>
       <hr class="review-divider"/>
-      <h4 class="reviews-title">All Reviews</h4>
+      <h4 class="reviews-title">All Reviews (<%= listing.reviews.length %>)</h4>
       <div class="row reviews-container">
         <% for(let rev of listing.reviews){ %>
           <div class="card review-card col-5 ms-3 mb-3">
@@ -160,17 +361,17 @@
               <h6 class="card-title review-author">@<%= rev.author.username %></h6>
               <p class="starability-result review-rating" data-rating="<%= rev.rating %>"></p>
               <p class="card-text review-comment"><%= rev.comment %></p>
-               <form method="POST" action="/listings/<%=listing._id%>/reviews/<%=rev._id%>?_method=DELETE" class="review-delete-form">
+               <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= rev._id %>?_method=DELETE" class="review-delete-form">
                 <button class="btn btn-outline-dark btn-sm dlt-btn"><i class="fa-solid fa-trash"></i></button>
                </form>
             </div>
           </div>
         <% } %>
-        </div>
+      </div>
     </div>
-    </div>
+  </div>
 
-    <script>
+  <script>
     // Favorite button AJAX functionality
     document.addEventListener('DOMContentLoaded', () => {
       const favoriteBtns = document.querySelectorAll('.favorite-btn');
@@ -195,10 +396,8 @@
             if (response.ok) {
               btn.classList.toggle('favorited');
               btn.setAttribute('data-is-favorited', !isFavorited);
-              // Update form action
               const newAction = !isFavorited ? 'remove' : 'add';
               form.action = `/favorites/${listingId}/${newAction}`;
-              // Update icon color
               const icon = btn.querySelector('i');
               icon.classList.remove('text-danger', 'text-muted');
               if (!isFavorited) {
@@ -206,18 +405,25 @@
               } else {
                 icon.classList.add('text-muted');
               }
-              // Add heartbeat animation
               btn.classList.add('clicked');
               setTimeout(() => {
                 btn.classList.remove('clicked');
               }, 500);
-            } else {
-              console.error('Failed to toggle favorite');
             }
           } catch (error) {
             console.error('Error:', error);
           }
         });
       });
+
+      // Thumbnail active state sync with carousel
+      const carousel = document.getElementById('showCarousel');
+      if (carousel) {
+        carousel.addEventListener('slid.bs.carousel', (e) => {
+          document.querySelectorAll('.thumbnail-strip img').forEach((t, i) => {
+            t.classList.toggle('active', i === e.to);
+          });
+        });
+      }
     });
-    </script>
+  </script>

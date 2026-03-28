@@ -22,6 +22,7 @@ const reviewRoutes = require("./route/review.js");
 const userRoutes = require("./route/user.js");
 const generalRoutes = require("./route/general.js");
 const favoriteRoutes = require("./route/favorite.js");
+const chatRoutes = require("./route/chat.js");
 
 // --- 1. Database Connection (Background Process) ---
 const urldb = process.env.ATLASDB_URL;
@@ -40,6 +41,7 @@ main(); // Start connection immediately but don't block the rest of the file
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
@@ -99,6 +101,7 @@ app.use("/listings/:id/reviews", reviewRoutes);
 app.use("/", userRoutes);
 app.use("/", generalRoutes);
 app.use("/favorites", favoriteRoutes);
+app.use("/chat", chatRoutes);
 
 // --- 6. Error Handling ---
 app.use((req, res, next) => {

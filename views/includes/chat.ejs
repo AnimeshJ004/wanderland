@@ -1,0 +1,115 @@
+<!-- AI Chat Widget -->
+<div id="chat-widget" class="chat-widget" data-logged-in="<%= currentUser ? 'true' : 'false' %>">
+  <!-- Chat Toggle Button -->
+  <button id="chat-toggle-btn" class="chat-toggle-btn" aria-label="Open chat assistant">
+    <div class="chat-toggle-icon">
+      <i class="fa-solid fa-comments"></i>
+    </div>
+    <div class="chat-toggle-close" style="display: none;">
+      <i class="fa-solid fa-xmark"></i>
+    </div>
+    <span class="chat-pulse"></span>
+  </button>
+
+  <!-- Chat Panel -->
+  <div id="chat-panel" class="chat-panel" style="display: none;">
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <div class="chat-header-text">
+          <h6 class="chat-header-title">WanderLand AI</h6>
+          <span class="chat-status">
+            <span class="chat-status-dot"></span>
+            Online — Ready to help
+          </span>
+        </div>
+      </div>
+      <button id="chat-minimize-btn" class="chat-minimize-btn" aria-label="Minimize chat">
+        <i class="fa-solid fa-minus"></i>
+      </button>
+    </div>
+
+    <% if(currentUser) { %>
+    <!-- === LOGGED-IN USER: Full chat experience === -->
+
+    <!-- Chat Messages Area -->
+    <div id="chat-messages" class="chat-messages">
+      <!-- Welcome Message -->
+      <div class="chat-message bot-message">
+        <div class="message-avatar">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <div class="message-content">
+          <div class="message-bubble">
+            <p>Hey there, <strong><%= currentUser.username %></strong>! 🌍</p>
+            <p>I'm your WanderLand assistant. I can help you with:</p>
+            <ul>
+              <li>🏠 <strong>Place recommendations</strong></li>
+              <li>📊 <strong>Reviews & feedback</strong></li>
+              <li>🏨 <strong>Hotel & stay info</strong></li>
+              <li>💡 <strong>Travel tips & advice</strong></li>
+            </ul>
+            <p>What would you like to explore?</p>
+          </div>
+          <span class="message-time">Just now</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Suggestions -->
+    <div id="chat-suggestions" class="chat-suggestions">
+      <button class="suggestion-chip" data-message="Recommend places">🌟 Recommend places</button>
+      <button class="suggestion-chip" data-message="Show hotels">🏨 Show hotels</button>
+      <button class="suggestion-chip" data-message="Travel tips">💡 Travel tips</button>
+      <button class="suggestion-chip" data-message="Budget travel">💰 Budget travel</button>
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chat-input-area">
+      <form id="chat-form" class="chat-form">
+        <input
+          type="text"
+          id="chat-input"
+          class="chat-input"
+          placeholder="Ask about places, hotels, reviews..."
+          autocomplete="off"
+          maxlength="500"
+        />
+        <button type="submit" id="chat-send-btn" class="chat-send-btn" aria-label="Send message">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+
+    <% } else { %>
+    <!-- === GUEST USER: Login prompt === -->
+
+    <div class="chat-messages chat-login-prompt">
+      <div class="chat-message bot-message">
+        <div class="message-avatar">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <div class="message-content">
+          <div class="message-bubble">
+            <p>Hey there, traveler! 🌍</p>
+            <p>I'd love to help you find the <strong>perfect stay</strong>, share <strong>reviews</strong>, and give you <strong>personalized recommendations</strong>!</p>
+            <p>But first, please <strong>log in</strong> to unlock the full chat experience. 🔐</p>
+          </div>
+          <span class="message-time">Just now</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-login-cta">
+      <a href="/login" class="chat-login-btn">
+        <i class="fa-solid fa-right-to-bracket"></i> Log In to Chat
+      </a>
+      <p class="chat-login-hint">Don't have an account? <a href="/signup">Sign up free</a></p>
+    </div>
+
+    <% } %>
+  </div>
+</div>

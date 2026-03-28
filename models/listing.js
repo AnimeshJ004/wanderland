@@ -12,6 +12,10 @@ const listingSchema = new mongoose.Schema({
     url: String,
     filename: String
   },
+  images: [{
+    url: String,
+    filename: String
+  }],
   price: {
     type: Number,
     required: true
@@ -20,6 +24,9 @@ const listingSchema = new mongoose.Schema({
     type: String
   },
   country: {
+    type: String
+  },
+  bookingUrl: {
     type: String
   },
   reviews: [{
