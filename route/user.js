@@ -7,20 +7,27 @@ const { saveredircturl } = require("../middleware.js");
 const { PostUser, LoginUser, LogoutUser, forgotPassword, resetPassword } = require("../controllers/user.js");
 const { resendOTP, verifyOTP } = require("../controllers/otp.js");
 
+// Middleware to trim input fields
+const trimInput = (req, res, next) => {
+    if (req.body.username) req.body.username = req.body.username.trim();
+    if (req.body.email) req.body.email = req.body.email.trim();
+    next();
+};
+
 
 //Signup form  & Signup logic
 router.route("/signup")
 .get((req, res) => {
     res.render("users/signup");
 })
-.post(wrapAsync(PostUser));
+.post(trimInput, wrapAsync(PostUser));
 
 //Login form & Login logic
 router.route("/login")
 .get((req, res) => {
     res.render("users/login");
 })
-.post(saveredircturl, passport.authenticate("local", {
+.post(trimInput, saveredircturl, passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true
 }), LoginUser);
@@ -43,7 +50,7 @@ router.route("/forgot-password")
 .get((req, res) => {
     res.render("users/forgot-password");
 })
-.post(wrapAsync(forgotPassword));
+.post(trimInput, wrapAsync(forgotPassword));
 
 //Reset password routes
 router.route("/reset-password")

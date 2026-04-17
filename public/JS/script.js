@@ -16,6 +16,14 @@
       form.classList.add('was-validated')
     }, false)
   })
+
+  // Auto-trim username and email fields on change
+  const trimInputs = document.querySelectorAll('input[name="username"], input[name="email"]');
+  trimInputs.forEach(input => {
+    input.addEventListener('blur', function() {
+      this.value = this.value.trim();
+    });
+  });
 })()
 
 // Password toggle functionality
