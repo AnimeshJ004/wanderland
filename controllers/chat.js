@@ -1,5 +1,6 @@
 const Listing = require("../models/listing");
 const Review = require("../models/review");
+const User = require("../models/user"); // Explicitly require User model for population
 
 // Travel knowledge base for general queries
 const travelKnowledge = {
@@ -53,7 +54,7 @@ const ownRecommendations = {
   ],
   budget: [
     { name: "Zostel Hostels", location: "Various cities, India", price: "₹500-1500/night", why: "India's largest hostel chain. Clean dorms, great common areas, and perfect for meeting fellow travelers.", url: "https://www.airbnb.com/s/India" },
-    { name: "Generator Hostels", location: "Europe (multiple cities)", price: "₹2,500-4,000/night", why: "Stylish hostels across Europe with bars, social events, and prime locations in Berlin, Amsterdam, Paris.", url: "https://www.airbnb.com/s/Europe" },
+    { name: "Generator Hostels", location: "Europe (multiple cities)", price: "₹2,500-4,000/night", why: "Stylish hostels across Europe with bars, social events, and prime locations in Berlin, Amsterdam, Paris.", url: "https://www.airbnb.com/s/Berlin" },
     { name: "Selina Hostels", location: "Latin America & Asia", price: "₹1,200-3,000/night", why: "Coworking-meets-hostel concept. Surf lessons, yoga, and community vibes in beautiful locations.", url: "https://www.airbnb.com/s/Costa-Rica" },
   ],
   romantic: [
@@ -99,6 +100,8 @@ const intentPatterns = {
 
 // Extract location/place keywords from user message
 function extractKeywords(message) {
+  if (!message || typeof message !== "string") return [];
+  
   // Remove common words
   const stopWords = new Set([
     "the", "a", "an", "is", "are", "was", "were", "be", "been", "being",
@@ -128,6 +131,7 @@ function extractKeywords(message) {
 
 // Calculate relevance score for a listing against keywords
 function scoreListing(listing, keywords) {
+  if (!listing) return 0;
   let score = 0;
   const title = (listing.title || "").toLowerCase();
   const description = (listing.description || "").toLowerCase();
@@ -146,39 +150,47 @@ function scoreListing(listing, keywords) {
 
 // Format price in INR
 function formatPrice(price) {
-  return "₹" + price.toLocaleString("en-IN");
+  if (price === undefined || price === null) return "N/A";
+  if (typeof price === "number") {
+    return "₹" + price.toLocaleString("en-IN");
+  }
+  return "₹" + price;
 }
 
 // Generate star rating display
 function starRating(rating) {
-  const full = Math.floor(rating);
-  const half = rating % 1 >= 0.5 ? 1 : 0;
-  const empty = 5 - full - half;
+  const r = parseFloat(rating) || 0;
+  const full = Math.floor(r);
+  const half = r % 1 >= 0.5 ? 1 : 0;
+  const empty = Math.max(0, 5 - full - half);
   return "★".repeat(full) + (half ? "½" : "") + "☆".repeat(empty);
 }
 
 // Random pick from array
 function randomPick(arr) {
+  if (!arr || arr.length === 0) return "";
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
 // Format listing as a card-like response
 function formatListingCard(listing) {
+  if (!listing) return "";
   const bookLink = listing.bookingUrl
     ? `\n🔗 [View Details](/listings/${listing._id}) | [Book on Airbnb](${listing.bookingUrl})`
     : `\n🔗 [View Details](/listings/${listing._id})`;
-  return `🏠 **${listing.title}**\n📍 ${listing.location}, ${listing.country}\n💰 ${formatPrice(listing.price)}/night\n📝 ${listing.description ? listing.description.substring(0, 100) + '...' : 'No description'}${bookLink}`;
+  return `🏠 **${listing.title || "Untitled"}**\n📍 ${listing.location || "Unknown"}, ${listing.country || ""}\n💰 ${formatPrice(listing.price)}/night\n📝 ${listing.description ? listing.description.substring(0, 100) + '...' : 'No description'}${bookLink}`;
 }
 
 // Format AI's own recommendation (not from DB)
 function formatOwnRec(rec) {
-  return `🌟 **${rec.name}**\n📍 ${rec.location}\n💰 ${rec.price}\n💎 ${rec.why}\n🔗 [Search on Airbnb](${rec.url})`;
+  if (!rec) return "";
+  return `🌟 **${rec.name || "Special Spot"}**\n📍 ${rec.location || "Various Locations"}\n💰 ${rec.price || "Contact for pricing"}\n💎 ${rec.why || "Highly recommended!"}\n🔗 [Search on Airbnb](${rec.url || "#"})`;
 }
 
 // Main chat handler
 module.exports.handleChat = async (req, res) => {
   try {
-    const { message } = req.body;
+    const { message } = req.body || {};
     if (!message || message.trim().length === 0) {
       return res.json({ response: "Please type a message! 😊", type: "text" });
     }
@@ -250,38 +262,44 @@ module.exports.handleChat = async (req, res) => {
     let listings = [];
     let searchQuery = {};
 
-    if (keywords.length > 0) {
-      // Build OR query across multiple fields
-      const orConditions = keywords.flatMap(kw => [
-        { title: { $regex: kw, $options: "i" } },
-        { description: { $regex: kw, $options: "i" } },
-        { location: { $regex: kw, $options: "i" } },
-        { country: { $regex: kw, $options: "i" } },
-      ]);
-      searchQuery = { $or: orConditions };
-    }
+    try {
+      if (keywords.length > 0) {
+        // Build OR query across multiple fields
+        const orConditions = keywords.flatMap(kw => [
+          { title: { $regex: kw, $options: "i" } },
+          { description: { $regex: kw, $options: "i" } },
+          { location: { $regex: kw, $options: "i" } },
+          { country: { $regex: kw, $options: "i" } },
+        ]);
+        searchQuery = { $or: orConditions };
+      }
 
-    listings = await Listing.find(searchQuery)
-      .populate({
-        path: "reviews",
-        populate: { path: "author" },
-      })
-      .populate("owner")
-      .limit(20);
-
-    // If no keyword matches, get all listings
-    if (listings.length === 0 && keywords.length > 0) {
-      listings = await Listing.find({})
+      listings = await Listing.find(searchQuery)
         .populate({
           path: "reviews",
           populate: { path: "author" },
         })
         .populate("owner")
         .limit(20);
+
+      // If no keyword matches, get all listings
+      if (listings.length === 0 && keywords.length > 0) {
+        listings = await Listing.find({})
+          .populate({
+            path: "reviews",
+            populate: { path: "author" },
+          })
+          .populate("owner")
+          .limit(20);
+      }
+    } catch (dbError) {
+      console.error("Database error in chat:", dbError);
+      // Fallback to empty listings instead of crashing
+      listings = [];
     }
 
     // Score and sort listings by relevance
-    if (keywords.length > 0) {
+    if (keywords.length > 0 && listings.length > 0) {
       listings = listings
         .map(l => ({ listing: l, score: scoreListing(l, keywords) }))
         .sort((a, b) => b.score - a.score)
@@ -290,7 +308,7 @@ module.exports.handleChat = async (req, res) => {
 
     // Feedback/Review intent
     if (intentPatterns.feedback.test(userMessage)) {
-      const relevantListings = listings.filter(l => l.reviews && l.reviews.length > 0).slice(0, 3);
+      const relevantListings = listings.filter(l => l && l.reviews && l.reviews.length > 0).slice(0, 3);
 
       if (relevantListings.length === 0) {
         return res.json({
@@ -302,15 +320,16 @@ module.exports.handleChat = async (req, res) => {
 
       let response = "📊 **Reviews & Feedback:**\n\n";
       for (const listing of relevantListings) {
-        const avgRating = listing.reviews.reduce((sum, r) => sum + r.rating, 0) / listing.reviews.length;
-        response += `🏠 **${listing.title}** — ${listing.location}, ${listing.country}\n`;
+        const totalRating = listing.reviews.reduce((sum, r) => sum + (r.rating || 0), 0);
+        const avgRating = totalRating / listing.reviews.length;
+        response += `🏠 **${listing.title || "Untitled"}** — ${listing.location || "Unknown"}\n`;
         response += `⭐ Average: ${avgRating.toFixed(1)}/5 ${starRating(avgRating)} (${listing.reviews.length} reviews)\n`;
 
         // Show top 2 reviews
         const topReviews = listing.reviews.slice(0, 2);
         for (const rev of topReviews) {
-          const authorName = rev.author ? rev.author.username : "Anonymous";
-          response += `   💬 *"${rev.comment}"* — @${authorName} (${starRating(rev.rating)})\n`;
+          const authorName = rev.author ? (rev.author.username || "User") : "Anonymous";
+          response += `   💬 *"${rev.comment || "No comment"}"* — @${authorName} (${starRating(rev.rating)})\n`;
         }
         response += `🔗 [See all reviews](/listings/${listing._id})\n\n`;
       }
@@ -337,9 +356,11 @@ module.exports.handleChat = async (req, res) => {
       let response = "🏨 **Accommodations for you:**\n\n";
       for (const listing of hotelListings) {
         const avgRating = listing.reviews && listing.reviews.length > 0
-          ? (listing.reviews.reduce((sum, r) => sum + r.rating, 0) / listing.reviews.length).toFixed(1)
+          ? (listing.reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / listing.reviews.length).toFixed(1)
           : "No ratings yet";
-        const ratingDisplay = typeof avgRating === "string" ? avgRating : `${avgRating}/5 ${starRating(parseFloat(avgRating))}`;
+        const ratingDisplay = typeof avgRating === "string" && isNaN(parseFloat(avgRating)) 
+          ? avgRating 
+          : `${avgRating}/5 ${starRating(parseFloat(avgRating))}`;
 
         response += formatListingCard(listing) + `\n⭐ ${ratingDisplay}\n\n`;
       }
@@ -354,7 +375,7 @@ module.exports.handleChat = async (req, res) => {
     // Price/budget intent with listings
     if (intentPatterns.price.test(userMessage)) {
       // Sort by price
-      const sortedListings = [...listings].sort((a, b) => a.price - b.price);
+      const sortedListings = [...listings].sort((a, b) => (a.price || 0) - (b.price || 0));
 
       if (intentPatterns.recommend.test(userMessage) || userMessage.toLowerCase().includes("cheap")) {
         // Show cheapest
@@ -382,11 +403,11 @@ module.exports.handleChat = async (req, res) => {
       if (sortedListings.length > 0) {
         const cheapest = sortedListings[0];
         const mostExpensive = sortedListings[sortedListings.length - 1];
-        const avgPrice = Math.round(sortedListings.reduce((sum, l) => sum + l.price, 0) / sortedListings.length);
+        const avgPrice = Math.round(sortedListings.reduce((sum, l) => sum + (l.price || 0), 0) / sortedListings.length);
 
         let response = `💰 **Price Overview:**\n\n`;
-        response += `📉 Cheapest: **${cheapest.title}** at ${formatPrice(cheapest.price)}/night\n`;
-        response += `📈 Most Premium: **${mostExpensive.title}** at ${formatPrice(mostExpensive.price)}/night\n`;
+        response += `📉 Cheapest: **${cheapest.title || "Stay"}** at ${formatPrice(cheapest.price)}/night\n`;
+        response += `📈 Most Premium: **${mostExpensive.title || "Stay"}** at ${formatPrice(mostExpensive.price)}/night\n`;
         response += `📊 Average: ${formatPrice(avgPrice)}/night\n\n`;
         response += `🔗 [Browse all listings](/listings)`;
 
@@ -408,7 +429,7 @@ module.exports.handleChat = async (req, res) => {
         response += "**📌 From our listings:**\n\n";
         for (const listing of topListings) {
           const avgRating = listing.reviews && listing.reviews.length > 0
-            ? `⭐ ${(listing.reviews.reduce((sum, r) => sum + r.rating, 0) / listing.reviews.length).toFixed(1)}/5`
+            ? `⭐ ${(listing.reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / listing.reviews.length).toFixed(1)}/5`
             : "✨ New listing";
           response += formatListingCard(listing) + `\n${avgRating}\n\n`;
         }
@@ -439,7 +460,7 @@ module.exports.handleChat = async (req, res) => {
       let response = "👑 **Luxury Hotel Picks:**\n\n";
 
       // DB luxury listings (high price)
-      const luxuryListings = listings.filter(l => l.price >= 20000).slice(0, 2);
+      const luxuryListings = listings.filter(l => (l.price || 0) >= 20000).slice(0, 2);
       if (luxuryListings.length > 0) {
         response += "**📌 On WanderLand:**\n\n";
         for (const listing of luxuryListings) {
@@ -470,7 +491,7 @@ module.exports.handleChat = async (req, res) => {
 
       // Also suggest relevant DB listings
       const romanticListings = listings.filter(l =>
-        /villa|palace|retreat|bungalow|suite/i.test(l.title + " " + l.description)
+        /villa|palace|retreat|bungalow|suite/i.test((l.title || "") + " " + (l.description || ""))
       ).slice(0, 2);
 
       if (romanticListings.length > 0) {
@@ -498,7 +519,7 @@ module.exports.handleChat = async (req, res) => {
 
       // DB adventure listings
       const adventureListings = listings.filter(l =>
-        /safari|treehouse|cabin|lodge|jungle|desert|mountain/i.test(l.title + " " + l.description)
+        /safari|treehouse|cabin|lodge|jungle|desert|mountain/i.test((l.title || "") + " " + (l.description || ""))
       ).slice(0, 2);
 
       if (adventureListings.length > 0) {
@@ -534,26 +555,33 @@ module.exports.handleChat = async (req, res) => {
 
     // List all intent
     if (intentPatterns.list.test(userMessage)) {
-      const allListings = await Listing.find({}).limit(10);
-      if (allListings.length === 0) {
+      try {
+        const allListings = await Listing.find({}).limit(10);
+        if (allListings.length === 0) {
+          return res.json({
+            response: "No listings available yet. Be the first to [create one](/listings/new)! 🎉",
+            type: "text",
+            suggestions: ["Travel tips", "How to create listing"],
+          });
+        }
+
+        let response = `📋 **All Available Places (${allListings.length}):**\n\n`;
+        for (const listing of allListings) {
+          response += `• **${listing.title || "Stay"}** — ${listing.location || "Unknown"} (${formatPrice(listing.price)}/night)\n`;
+        }
+        response += `\n🔗 [View all on Explore page](/listings)`;
+
         return res.json({
-          response: "No listings available yet. Be the first to [create one](/listings/new)! 🎉",
-          type: "text",
-          suggestions: ["Travel tips", "How to create listing"],
+          response,
+          type: "listings",
+          suggestions: ["Recommend best", "Cheapest stays", "Reviews"],
+        });
+      } catch (e) {
+        return res.json({
+          response: "I couldn't fetch all listings right now. Please try again later!",
+          type: "text"
         });
       }
-
-      let response = `📋 **All Available Places (${allListings.length}):**\n\n`;
-      for (const listing of allListings) {
-        response += `• **${listing.title}** — ${listing.location}, ${listing.country} (${formatPrice(listing.price)}/night)\n`;
-      }
-      response += `\n🔗 [View all on Explore page](/listings)`;
-
-      return res.json({
-        response,
-        type: "listings",
-        suggestions: ["Recommend best", "Cheapest stays", "Reviews"],
-      });
     }
 
     // Fallback — try to find something relevant or give general help
@@ -565,7 +593,7 @@ module.exports.handleChat = async (req, res) => {
         let response = `I found something that might interest you! 🔍\n\n`;
         response += formatListingCard(topMatch);
         if (topMatch.reviews && topMatch.reviews.length > 0) {
-          const avgRating = (topMatch.reviews.reduce((sum, r) => sum + r.rating, 0) / topMatch.reviews.length).toFixed(1);
+          const avgRating = (topMatch.reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / topMatch.reviews.length).toFixed(1);
           response += `\n⭐ ${avgRating}/5 (${topMatch.reviews.length} reviews)`;
         }
 
@@ -586,11 +614,19 @@ module.exports.handleChat = async (req, res) => {
 
   } catch (error) {
     console.error("Chat error:", error);
-    return res.json({
-      response: "Oops! Something went wrong on my end. 😅 Please try again!",
-      type: "error",
-      suggestions: ["Try again", "Show hotels", "Travel tips"],
-    });
+    // CRITICAL: Always return JSON even on top-level error to avoid 500 status
+    try {
+      return res.status(200).json({
+        response: "Oops! Something went wrong on my end. 😅 Please try again!",
+        type: "error",
+        suggestions: ["Try again", "Show hotels", "Travel tips"],
+      });
+    } catch (sendError) {
+      // If even res.json fails, last resort
+      if (!res.headersSent) {
+        res.status(500).send("Server Error");
+      }
+    }
   }
 };
 
@@ -598,8 +634,8 @@ module.exports.handleChat = async (req, res) => {
 module.exports.getSuggestions = async (req, res) => {
   try {
     // Get some stats
-    const listingCount = await Listing.countDocuments();
-    const reviewCount = await Review.countDocuments();
+    const listingCount = await Listing.countDocuments().catch(() => 0);
+    const reviewCount = await Review.countDocuments().catch(() => 0);
 
     res.json({
       suggestions: [
@@ -622,3 +658,4 @@ module.exports.getSuggestions = async (req, res) => {
     });
   }
 };
+
