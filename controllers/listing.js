@@ -45,15 +45,17 @@ module.exports.ShowList = wrapAsync(async(req,res)=>{
 
 //Create Route Callback
 module.exports.CreateList = wrapAsync(async (req,res,next)=>{
-      if(!req.file){
+      if(!req.files || req.files.length === 0){
             req.flash("error", "Please Upload image to create a new list!");
             return res.redirect("/listings/new");
         }
-        let url = req.file.path;
-        let filename = req.file.filename;
+        
         const newlisting = new listing(req.body.listing);
         newlisting.owner = req.user._id;
-        newlisting.image = {url, filename};
+        
+        newlisting.images = req.files.map(file => ({ url: file.path, filename: file.filename }));
+        newlisting.image = newlisting.images[0]; // Set the first image for backwards compatibility
+        
         await newlisting.save();
       
         req.flash("success", "New listing created successfully!");
@@ -78,10 +80,9 @@ module.exports.EditList = wrapAsync(async (req, res) => {
 module.exports.UpdateList = wrapAsync(async (req, res) => {
     const { id } = req.params;
     let updatedlisting = await listing.findByIdAndUpdate(id, { ...req.body.listing });
-    if(typeof req.file !== 'undefined'){
-        let url = req.file.path;
-        let filename = req.file.filename;
-        updatedlisting.image = {url, filename};
+    if(typeof req.files !== 'undefined' && req.files.length > 0){
+        updatedlisting.images = req.files.map(file => ({ url: file.path, filename: file.filename }));
+        updatedlisting.image = updatedlisting.images[0];
         await updatedlisting.save(); 
     }
     req.flash("success", "Listing updated successfully!");

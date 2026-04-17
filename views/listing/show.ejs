@@ -297,9 +297,12 @@
                 <i class="fa-solid fa-external-link-alt"></i> Book on Airbnb
               </a>
             <% } else { %>
-              <a href="https://www.airbnb.com/s/<%= encodeURIComponent(listing.location + ', ' + listing.country) %>" target="_blank" rel="noopener noreferrer" class="book-btn">
-                <i class="fa-solid fa-external-link-alt"></i> Find on Airbnb
-              </a>
+              <div class="mt-3 p-3 bg-light border rounded text-center">
+                <p class="text-muted mb-3" style="font-size: 1rem;"><i class="fas fa-map-marker-alt text-danger"></i> Here is the location: <strong><%= listing.location %>, <%= listing.country %></strong></p>
+                <a href="https://www.airbnb.com/s/<%= encodeURIComponent(listing.location + ', ' + listing.country) %>/homes" target="_blank" rel="noopener noreferrer" class="book-btn" style="background: linear-gradient(135deg, #00a699, #008489) !important; box-shadow: 0 4px 18px rgba(0, 132, 137, 0.35);">
+                  <i class="fa-solid fa-search"></i> Find hotels
+                </a>
+              </div>
             <% } %>
           <% } else { %>
             <a href="/login" class="book-btn" style="background: linear-gradient(135deg, #888, #666) !important; box-shadow: 0 4px 18px rgba(0,0,0,0.2);">

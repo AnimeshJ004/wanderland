@@ -28,8 +28,8 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="Image" class="form-label fw-semibold">Upload New Image</label>
-                        <input name="listing[image]" value="<%= listing.image.url %>" type="file" class="form-control form-control-lg">
+                        <label for="Image" class="form-label fw-semibold">Upload New Image(s)</label>
+                        <input name="listing[image]" value="<%= listing.image.url %>" type="file" class="form-control form-control-lg" multiple>
                     </div>
 
                     <div class="row g-3">
@@ -50,6 +50,12 @@
                         <label for="Country" class="form-label fw-semibold">Country</label>
                         <input name="listing[country]" value="<%= listing.country %>" type="text" class="form-control form-control-lg" required>
                         <div class="invalid-feedback">Country Should be Valid!</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="bookingUrl" class="form-label fw-semibold">Airbnb Booking Link (Optional)</label>
+                        <input name="listing[bookingUrl]" value="<%= listing.bookingUrl || '' %>" placeholder="https://www.airbnb.com/rooms/..." type="url" class="form-control form-control-lg">
+                        <div class="invalid-feedback">Please enter a valid URL.</div>
                     </div>
 
                     <div class="d-grid">

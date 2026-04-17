@@ -4,15 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f98211-3b5e-4886-8726-58b0c0e71d1b" name="Changes" comment="" />
+    <list default="true" id="95f98211-3b5e-4886-8726-58b0c0e71d1b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/listing.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/listing.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/route/listing.js" beforeDir="false" afterPath="$PROJECT_DIR$/route/listing.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema.js" beforeDir="false" afterPath="$PROJECT_DIR$/schema.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/listing/edit.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/listing/edit.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/listing/new.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/listing/new.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/listing/show.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/listing/show.ejs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_D:/Coding/Projects/Wanderland" value="3263G7duIQkLAUsHw4Zwg38iQba" />
+    </persistenceIdMap>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AnimeshJ004&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AnimeshJ004/wanderland.git&quot;,
+    &quot;accountId&quot;: &quot;4c5ef0f2-7371-4020-b45c-56c81207f7b8&quot;
+  }
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -33,6 +58,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
@@ -52,7 +78,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.32098.37" />
       </set>
     </attachedChunks>
   </component>
@@ -93,6 +120,7 @@
       <workItem from="1757691124931" duration="203000" />
       <workItem from="1757732010671" duration="920000" />
       <workItem from="1758367299092" duration="82000" />
+      <workItem from="1776418485066" duration="1221000" />
     </task>
     <servers />
   </component>
@@ -109,5 +137,13 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

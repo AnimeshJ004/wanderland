@@ -17,11 +17,11 @@ router.get("/new" ,isLoggedIn,NewList);
 //Show Route
 router.get("/:id" , ShowList);
 //Create Route
-router.post("/" , upload.single('listing[image]'), validatelisting, isLoggedIn, CreateList);
+router.post("/" , upload.array('listing[image]', 10), validatelisting, isLoggedIn, CreateList);
 //Edit Route
 router.get("/:id/edit", isLoggedIn, isOwner, EditList);
 //Update route
-router.put("/:id", upload.single('listing[image]'), validatelisting, isLoggedIn, isOwner, UpdateList);
+router.put("/:id", upload.array('listing[image]', 10), validatelisting, isLoggedIn, isOwner, UpdateList);
 //Delete Route
 router.delete("/:id" , isLoggedIn, isOwner ,DeleteList);
 
