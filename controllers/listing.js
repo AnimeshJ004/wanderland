@@ -17,6 +17,10 @@ module.exports.index = async (req,res)=>{
        };
    }
 
+   if (!req.user) {
+       return res.render("listing/index.ejs", { listings: [] });
+   }
+
    const alllisting = await listing.find(query);
    if (alllisting.length === 0) {
        res.render("listing/index.ejs" , { listings: [] });

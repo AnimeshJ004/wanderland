@@ -19,6 +19,10 @@
 
   if (!chatWidget) return; // Exit if widget not found
 
+  // If we're in guest view (no chat form), we still want to initialize the toggle functionality
+  // but skip chat-specific features that require the form elements
+  const isGuestView = !chatForm || !chatInput || !chatSendBtn;
+
   let isOpen = false;
   let isLoading = false;
 
@@ -35,7 +39,7 @@
       chatPanel.classList.add("show");
     });
 
-    chatInput.focus();
+    if (chatInput) chatInput.focus();
     scrollToBottom();
   }
 
@@ -64,12 +68,14 @@
   });
 
   // ========== Send Message ==========
-  chatForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const message = chatInput.value.trim();
-    if (!message || isLoading) return;
-    sendMessage(message);
-  });
+  if (chatForm) {
+    chatForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const message = chatInput.value.trim();
+      if (!message || isLoading) return;
+      sendMessage(message);
+    });
+  }
 
   async function sendMessage(message) {
     // Add user message to UI
@@ -179,6 +185,7 @@
 
   // ========== Suggestions ==========
   function updateSuggestions(suggestions) {
+    if (!chatSuggestions) return;
     chatSuggestions.innerHTML = "";
     suggestions.forEach((text) => {
       const chip = document.createElement("button");
@@ -195,13 +202,15 @@
   }
 
   // Delegate click on initial suggestion chips
-  chatSuggestions.addEventListener("click", (e) => {
-    const chip = e.target.closest(".suggestion-chip");
-    if (chip && !isLoading) {
-      const message = chip.getAttribute("data-message");
-      sendMessage(message);
-    }
-  });
+  if (chatSuggestions) {
+    chatSuggestions.addEventListener("click", (e) => {
+      const chip = e.target.closest(".suggestion-chip");
+      if (chip && !isLoading) {
+        const message = chip.getAttribute("data-message");
+        sendMessage(message);
+      }
+    });
+  }
 
   function getSuggestionEmoji(text) {
     const lower = text.toLowerCase();
@@ -219,6 +228,7 @@
 
   // ========== Utilities ==========
   function scrollToBottom() {
+    if (!chatMessages) return;
     requestAnimationFrame(() => {
       chatMessages.scrollTop = chatMessages.scrollHeight;
     });
@@ -287,8 +297,10 @@
   // ========== Session Persistence ==========
   // Store chat state in sessionStorage to persist across page navigations
   function saveChatHistory() {
-    const messages = chatMessages.innerHTML;
-    sessionStorage.setItem("wanderland_chat_messages", messages);
+    if (chatMessages) {
+      const messages = chatMessages.innerHTML;
+      sessionStorage.setItem("wanderland_chat_messages", messages);
+    }
     sessionStorage.setItem("wanderland_chat_open", isOpen ? "true" : "false");
   }
 
@@ -296,7 +308,7 @@
     const savedMessages = sessionStorage.getItem("wanderland_chat_messages");
     const wasOpen = sessionStorage.getItem("wanderland_chat_open");
 
-    if (savedMessages) {
+    if (savedMessages && chatMessages) {
       chatMessages.innerHTML = savedMessages;
       scrollToBottom();
     }

@@ -4,7 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95f98211-3b5e-4886-8726-58b0c0e71d1b" name="Changes" comment="" />
+    <list default="true" id="95f98211-3b5e-4886-8726-58b0c0e71d1b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/listing.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/listing.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/JS/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/JS/chat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/JS/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/JS/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/route/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/route/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/includes/footer.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/includes/footer.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/includes/navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/includes/navbar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/layouts/boilerplate.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/layouts/boilerplate.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/listing/edit.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/listing/edit.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/listing/favorites.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/listing/favorites.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/listing/home.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/listing/home.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/listing/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/listing/index.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/listing/new.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/listing/new.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/listing/show.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/listing/show.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/privacy.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/privacy.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/terms.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/terms.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/users/forgot-password.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/users/forgot-password.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/users/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/users/login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/users/reset-password.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/users/reset-password.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/users/signup.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/users/signup.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/users/verify-otp.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/users/verify-otp.ejs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +42,12 @@
     <persistenceIdMap>
       <entry key="_D:/Coding/Projects/Wanderland" value="3263G7duIQkLAUsHw4Zwg38iQba" />
     </persistenceIdMap>
+  </component>
+  <component name="CopilotUserSelectedModel">
+    <selectedModels>
+      <entry key="agent-panel" value="GPT-5.3-Codex" />
+      <entry key="chat-panel" value="GPT-5.3-Codex" />
+    </selectedModels>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -112,7 +146,9 @@
       <workItem from="1757691124931" duration="203000" />
       <workItem from="1757732010671" duration="920000" />
       <workItem from="1758367299092" duration="82000" />
-      <workItem from="1776418485066" duration="2615000" />
+      <workItem from="1776418485066" duration="3112000" />
+      <workItem from="1776425493186" duration="8121000" />
+      <workItem from="1776481224315" duration="2155000" />
     </task>
     <servers />
   </component>

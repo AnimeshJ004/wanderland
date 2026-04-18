@@ -1,58 +1,94 @@
 <%- layout("/layouts/boilerplate") %>
-  <div class="row mt-3 mb-4">
-    <div class="col-8 offset-2">
-    <div class="new-listing-container">
-        <h3>Create a new list</h3>
-        <br>
-        <form method="POST" action="/listings" class="needs-validation new-listing-form" novalidate enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input name="listing[title]" placeholder="Enter Title" type="text" class="form-control"
-                required>
-                <div class="valid-feedback"> Title looks good</div>
-                  <div class="invalid-feedback">Title Should  be Valid!</div>
-            </div>
-            
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea name="listing[description]" class="form-control" required></textarea> 
-                  <div class="invalid-feedback">Description Should be Short!</div>
-            </div>
-            
-             <div class="mb-3">
-                <label for="Image" class="form-label">Upload Image(s)</label>
-                <input name="listing[image]" type="file" class="form-control" multiple required>
-            </div>
-            <div class="row">           
-               <div class="mb-3 col-md-4">
-                <label for="Price" class="form-label">Price</label>
-                <input name="listing[price]" placeholder="Enter price" class="form-control" required>
-              <div class="invalid-feedback">Price Should be Valid!</div>
-            </div>
-            
-            <div class="mb-3 col-md-8">
-                <label for="Location" class="form-label">Location</label>
-                <input name="listing[location]" placeholder="Enter Location" type="text" class="form-control" required>
-             <div class="invalid-feedback">Location Should be Valid!</div>
-            </div>
-            </div>
-            <div class="mb-3">
-                <label for="Country" class="form-label">Country</label>
-                <input name="listing[country]" placeholder="Enter Country" type="text" class="form-control" required>
-              <div class="invalid-feedback">Country Should be Valid!</div>
-            </div>
 
-            <div class="mb-3">
-                <label for="bookingUrl" class="form-label">Airbnb Booking Link (Optional)</label>
-                <input name="listing[bookingUrl]" placeholder="https://www.airbnb.com/rooms/..." type="url" class="form-control">
-                <div class="invalid-feedback">Please enter a valid URL.</div>
-            </div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="auth-glass-card neumorphic-3d animate-in mx-auto w-100" style="max-width: 100%;">
+                <div class="form-header text-center mb-5">
+                    <div class="icon-box-lg mb-3">
+                        <i class="fa-solid fa-house-medical text-gradient fa-3x"></i>
+                    </div>
+                    <h2 class="auth-title">Create New Listing</h2>
+                    <p class="auth-subtitle">Share your amazing place with the world</p>
+                </div>
 
-            <button class="btn btn-dark mb-3 mt-3">Add List</button>
-            <br>
-        </form>
+                <form method="POST" action="/listings" novalidate class="needs-validation row g-4" enctype="multipart/form-data">
+                    <!-- Title -->
+                    <div class="col-12 auth-input-group">
+                        <label for="title" class="form-label">Property Title</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-heading input-icon"></i>
+                            <input name="listing[title]" placeholder="Catchy title for your place" type="text" class="form-control glass-input" required />
+                        </div>
+                        <div class="invalid-feedback">Title is required.</div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="col-12 auth-input-group">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="listing[description]" placeholder="Describe your place, amenities, and surroundings..." rows="4" class="form-control glass-input p-4 ps-5" required style="padding-left: 50px !important;"></textarea>
+                        <i class="fa-solid fa-align-left input-icon" style="top: 25px;"></i>
+                        <div class="invalid-feedback">Please enter a short description.</div>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="col-12 auth-input-group">
+                        <label for="image" class="form-label">Upload Images</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-cloud-arrow-up input-icon"></i>
+                            <input name="listing[image]" type="file" class="form-control glass-input" multiple required />
+                        </div>
+                        <div class="small text-muted mt-1 ps-2">You can select multiple images</div>
+                        <div class="invalid-feedback">Please upload at least one image.</div>
+                    </div>
+
+                    <!-- Booking URL -->
+                    <div class="col-12 auth-input-group">
+                        <label for="bookingUrl" class="form-label">Airbnb Booking Link</label>
+                        <div class="input-with-icon">
+                            <i class="fa-brands fa-airbnb input-icon"></i>
+                            <input name="listing[bookingUrl]" placeholder="https://www.airbnb.com/rooms/..." type="url" class="form-control glass-input" />
+                        </div>
+                    </div>
+
+                    <!-- Price & Country -->
+                    <div class="col-md-6 auth-input-group">
+                        <label for="price" class="form-label">Price per Night</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-indian-rupee-sign input-icon"></i>
+                            <input name="listing[price]" placeholder="1200" type="number" class="form-control glass-input" required />
+                        </div>
+                        <div class="invalid-feedback">Price should be a valid number.</div>
+                    </div>
+
+                    <div class="col-md-6 auth-input-group">
+                        <label for="country" class="form-label">Country</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-globe input-icon"></i>
+                            <input name="listing[country]" placeholder="India" type="text" class="form-control glass-input" required />
+                        </div>
+                        <div class="invalid-feedback">Country is required.</div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="col-12 auth-input-group mb-4">
+                        <label for="location" class="form-label">Location / City</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-map-location-dot input-icon"></i>
+                            <input name="listing[location]" placeholder="Jaipur, Rajasthan" type="text" class="form-control glass-input" required />
+                        </div>
+                        <div class="invalid-feedback">Location is required.</div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="col-12 text-center mt-5">
+                        <button class="glass-btn primary px-5 py-3 w-100 m-0">
+                            <span class="btn-text fs-5">Add Listing</span>
+                            <i class="fa-solid fa-plus ms-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
     </div>
-
-    
+</div>

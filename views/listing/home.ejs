@@ -1,102 +1,95 @@
 <%- layout("/layouts/boilerplate") %>
-</div><!-- Close boilerplate container to allow full-width sections -->
 
-<div class="hero-section">
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <h1 class="hero-title">Welcome to WanderLand</h1>
-    <p class="hero-subtitle">Discover amazing destinations and create unforgettable memories</p>
-    <div class="hero-buttons">
-      <a href="/listings" class="btn btn-primary btn-lg hero-btn">Explore Listings</a>
-      <a href="/signup" class="btn btn-outline-light btn-lg hero-btn">Sign Up</a>
+<div class="container-fluid px-lg-5 py-5">
+    <!-- Hero Section -->
+    <section class="glass-hero mb-5 animate-in">
+        <div class="hero-glass-card">
+            <h1 class="glass-title">Discover Your Next <span class="text-gradient">Adventure</span></h1>
+            <p class="glass-subtitle">Experience the world in 3D. Find unique places to stay and things to do around the globe.</p>
+            <div class="glass-actions mt-4">
+                <a href="/listings" class="glass-btn primary">Explore Now</a>
+                <a href="/listings/new" class="glass-btn secondary">Add Listing</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats/Features Section -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4 animate-in-delay-1">
+            <div class="glass-feature-card neumorphic-3d">
+                <div class="icon-box"><i class="fa-solid fa-earth-americas"></i></div>
+                <h3>Global Reach</h3>
+                <p>Find hidden gems in over 190 countries worldwide.</p>
+            </div>
+        </div>
+        <div class="col-md-4 animate-in-delay-2">
+            <div class="glass-feature-card neumorphic-3d">
+                <div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3>Secure Booking</h3>
+                <p>Verified listings and secure payment processing for peace of mind.</p>
+            </div>
+        </div>
+        <div class="col-md-4 animate-in-delay-3">
+            <div class="glass-feature-card neumorphic-3d">
+                <div class="icon-box"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <h3>Unique Stays</h3>
+                <p>From treehouses to castles, find places you won't find anywhere else.</p>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <!-- AI Chat Section -->
+    <section class="row align-items-center mb-5 py-5 animate-in-delay-4">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="glass-feature-card neumorphic-3d p-5 text-start">
+                <div class="icon-box ms-0"><i class="fa-solid fa-robot"></i></div>
+                <h2 class="glass-title fs-2 mb-3">AI-Powered <span class="text-gradient">Travel Assistant</span></h2>
+                <p class="glass-subtitle ms-0 fs-5 mb-4">Never feel lost again. Our intelligent AI companion is available 24/7 to help you find the perfect stay, suggest local attractions, and answer all your travel queries in real-time.</p>
+                <ul class="list-unstyled">
+                    <li class="mb-2 text-dark"><i class="fa-solid fa-check-circle text-danger me-2"></i> Instant travel recommendations</li>
+                    <li class="mb-2 text-dark"><i class="fa-solid fa-check-circle text-danger me-2"></i> Real-time local insights</li>
+                    <li class="mb-2 text-dark"><i class="fa-solid fa-check-circle text-danger me-2"></i> 24/7 smart customer support</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-6 px-lg-5">
+            <h2 class="display-5 fw-bold mb-4">Experience Sharing <br><span class="text-danger">Redefined</span></h2>
+            <p class="lead text-muted mb-4">WanderLand isn't just a booking site; it's where stories are told. Share your unique hotel experiences, read authentic reviews from fellow travelers, and discover hidden gems through the eyes of the community.</p>
+            <div class="d-flex gap-3">
+                <div class="text-center p-3 glass-card-sm neumorphic-3d rounded-4 flex-fill">
+                    <h4 class="fw-bold text-danger mb-1">50k+</h4>
+                    <small class="text-muted">Users</small>
+                </div>
+                <div class="text-center p-3 glass-card-sm neumorphic-3d rounded-4 flex-fill">
+                    <h4 class="fw-bold text-danger mb-1">10k+</h4>
+                    <small class="text-muted">Stories</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Grid Section -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-6 animate-in-delay-1">
+            <div class="glass-feature-card neumorphic-3d p-4 h-100">
+                <h4 class="fw-bold"><i class="fa-solid fa-camera-retro text-danger me-2"></i>Capture & Share</h4>
+                <p class="text-muted">Upload high-quality photos of your stays and let the world see the beauty of your discoveries.</p>
+            </div>
+        </div>
+        <div class="col-md-6 animate-in-delay-2">
+            <div class="glass-feature-card neumorphic-3d p-4 h-100">
+                <h4 class="fw-bold"><i class="fa-solid fa-heart text-danger me-2"></i>Personal Favorites</h4>
+                <p class="text-muted">Build your dream bucket list by saving your most-loved destinations to your personal favorites collection.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Join Community Promo -->
+    <section class="glass-promo neumorphic-3d animate-in-delay-4">
+        <div class="promo-content">
+            <h2>Join Our Community</h2>
+            <p>WanderLand is more than just a platform; it's a community of explorers. Start your journey today.</p>
+            <a href="/signup" class="glass-btn primary mt-3">Get Started</a>
+        </div>
+    </section>
 </div>
-
-<section class="features-section">
-  <div class="container">
-    <h2 class="section-title">Why Choose WanderLand?</h2>
-    <div class="row">
-      <div class="col-md-4 feature-item">
-        <i class="fas fa-map-marked-alt feature-icon"></i>
-        <h3>Explore Destinations</h3>
-        <p>Discover hidden gems and popular spots around the world.</p>
-      </div>
-      <div class="col-md-4 feature-item">
-        <i class="fas fa-users feature-icon"></i>
-        <h3>Connect with Travelers</h3>
-        <p>Share experiences and connect with fellow adventurers.</p>
-      </div>
-      <div class="col-md-4 feature-item">
-        <i class="fas fa-star feature-icon"></i>
-        <h3>Rate & Review</h3>
-        <p>Read authentic reviews and share your own adventures.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="islands-section">
-  <div class="container">
-    <h2 class="section-title">Island Destinations</h2>
-    <div class="row">
-      <div class="col-md-4 island-item">
-        <div class="island-card">
-          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop" alt="Bora Bora" class="island-img">
-          <div class="island-overlay">
-            <h4>Bora Bora</h4>
-            <p>Overwater bungalows in crystal-clear lagoons</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 island-item">
-        <div class="island-card">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop" alt="Maldives" class="island-img">
-          <div class="island-overlay">
-            <h4>Maldives</h4>
-            <p>Privat e resorts on white-sand beaches</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 island-item">
-        <div class="island-card">
-          <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=400&h=300&fit=crop" alt="Santorini" class="island-img">
-          <div class="island-overlay">
-            <h4>Santorini</h4>
-            <p>Cliffside views and stunning sunsets</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 island-item">
-        <div class="island-card">
-          <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop" alt="Maui" class="island-img">
-          <div class="island-overlay">
-            <h4>Maui</h4>
-            <p>Haleakalā sunrise and lush valleys</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 island-item">
-        <div class="island-card">
-          <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop" alt="Palau" class="island-img">
-          <div class="island-overlay">
-            <h4>Palau</h4>
-            <p>Rock Islands and pristine marine life</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 island-item">
-        <div class="island-card">
-          <img src="https://images.unsplash.com/photo-1617362985992-d0b6814cacef?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=984" alt="Seychelles" class="island-img">
-          <div class="island-overlay">
-            <h4>Seychelles</h4>
-            <p>Granite boulders and turquoise waters</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="container"><!-- Reopen container for boilerplate footer -->
-

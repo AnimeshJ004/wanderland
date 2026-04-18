@@ -21,7 +21,14 @@ const userSchema = new Schema({
     favorites: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Listing"
-    }]
+    }],
+    googleId: {
+        type: String,
+    },
+    isGoogleUser: {
+        type: Boolean,
+        default: false
+    }
 });
 
 userSchema.plugin(passportLocalMongoose); // adds username , hash and salt fields to store the username , the hashed password and the salt value

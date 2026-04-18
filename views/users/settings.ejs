@@ -1,0 +1,84 @@
+<%- layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="auth-glass-card neumorphic-3d animate-in mx-auto w-100" style="max-width: 100%;">
+                <div class="form-header text-center mb-5">
+                    <div class="icon-box-lg mb-3">
+                        <i class="fa-solid fa-gear text-gradient fa-3x"></i>
+                    </div>
+                    <h2 class="auth-title">Account Settings</h2>
+                    <p class="auth-subtitle">Manage your profile and security preferences</p>
+                </div>
+
+                <!-- Profile Information -->
+                <div class="settings-section mb-5 animate-in-delay-1">
+                    <h4 class="fw-800 mb-4"><i class="fa-solid fa-user-shield text-gradient me-2"></i>Profile Information</h4>
+                    <div class="glass-card-sm p-4">
+                        <div class="row g-4">
+                            <div class="col-md-6 auth-input-group">
+                                <label class="form-label">Username</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-at input-icon"></i>
+                                    <input type="text" class="form-control glass-input bg-white-50" value="<%= currentUser.username %>" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6 auth-input-group">
+                                <label class="form-label">Email Address</label>
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-envelope input-icon"></i>
+                                    <input type="text" class="form-control glass-input bg-white-50" value="<%= currentUser.email %>" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="small text-muted mt-3 mb-0 ps-2"><i class="fa-solid fa-info-circle me-1"></i>Username and email cannot be changed at this time.</p>
+                    </div>
+                </div>
+
+                <!-- Danger Zone -->
+                <div class="settings-section animate-in-delay-3">
+                    <h4 class="fw-800 mb-4 text-danger"><i class="fa-solid fa-skull-crossbones me-2"></i>Danger Zone</h4>
+                    <div class="glass-card-sm p-4 border border-danger border-opacity-25">
+                        <p class="fw-600">Delete Account</p>
+                        <p class="text-muted small mb-4">Once you delete your account, there is no going back. Please be certain. Type your username <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25"><%= currentUser.username %></span> to confirm.</p>
+                        
+                        <form action="/settings/delete-account" method="POST" id="deleteAccountForm">
+                            <div class="auth-input-group mb-4">
+                                <div class="input-with-icon">
+                                    <i class="fa-solid fa-user-xmark input-icon"></i>
+                                    <input type="text" class="form-control glass-input" id="confirmUsername" name="confirmUsername" placeholder="Enter your username" required>
+                                </div>
+                            </div>
+                            <button type="submit" id="deleteBtn" class="glass-btn secondary text-danger border-danger border-opacity-50 m-0 px-5 w-100" disabled>
+                                <i class="fa-solid fa-trash-can me-2"></i>Delete Permanently
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const confirmInput = document.getElementById('confirmUsername');
+    const deleteBtn = document.getElementById('deleteBtn');
+    const targetUsername = "<%= currentUser.username %>".trim();
+
+    confirmInput.addEventListener('input', function() {
+        if (confirmInput.value.trim() === targetUsername) {
+            deleteBtn.disabled = false;
+            deleteBtn.classList.remove('secondary');
+            deleteBtn.style.background = 'linear-gradient(135deg, #dc3545, #c82333)';
+            deleteBtn.style.color = 'white';
+        } else {
+            deleteBtn.disabled = true;
+            deleteBtn.classList.add('secondary');
+            deleteBtn.style.background = '';
+            deleteBtn.style.color = '';
+        }
+    });
+});
+</script>

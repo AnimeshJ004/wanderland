@@ -1,50 +1,36 @@
-<% layout("layouts/boilerplate") %>
+<%- layout("/layouts/boilerplate") %>
 
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <h1 class="text-center mb-4" style="color: #fe424d;">Terms of Service</h1>
+<div class="glass-home-wrapper">
+    <!-- Animated Background -->
+    <div class="bg-shape blob-2"></div>
+    <div class="bg-shape blob-3"></div>
 
-            <div class="card shadow-sm">
-                <div class="card-body p-4">
-                    <h2 class="h4 mb-3">Acceptance of Terms</h2>
-                    <p>By accessing and using WanderLust, you accept and agree to be bound by the terms and provision of this agreement.</p>
+    <div class="container py-5 mt-4">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1 animate-in">
+                <div class="hero-glass-card text-start p-4 p-md-5">
+                    <h1 class="glass-title mb-4">Terms of <span class="text-gradient">Service</span></h1>
+                    <p class="text-muted mb-5">By using WanderLand, you agree to comply with and be bound by the following terms and conditions of use.</p>
 
-                    <h2 class="h4 mb-3">Use License</h2>
-                    <p>Permission is granted to temporarily use WanderLust for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
-                    <ul>
-                        <li>Modify or copy the materials</li>
-                        <li>Use the materials for any commercial purpose or for any public display</li>
-                        <li>Attempt to decompile or reverse engineer any software contained on WanderLust</li>
-                        <li>Remove any copyright or other proprietary notations from the materials</li>
-                    </ul>
+                    <div class="glass-feature-card neumorphic-3d p-4 mb-4 text-start">
+                        <h4 class="fw-bold mb-3"><i class="fa-solid fa-user-check text-danger me-2"></i>1. User Responsibility</h4>
+                        <p class="text-muted">You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
+                    </div>
 
-                    <h2 class="h4 mb-3">User Accounts</h2>
-                    <p>When you create an account with us, you must provide information that is accurate, complete, and current at all times. You are responsible for safeguarding the password and for all activities that occur under your account.</p>
+                    <div class="glass-feature-card neumorphic-3d p-4 mb-4 text-start">
+                        <h4 class="fw-bold mb-3"><i class="fa-solid fa-images text-danger me-2"></i>2. Content Submission</h4>
+                        <p class="text-muted">Any content you share, including hotel experiences and photos, must be authentic and must not violate any intellectual property rights or community guidelines.</p>
+                    </div>
 
-                    <h2 class="h4 mb-3">Content</h2>
-                    <p>Our service allows you to post, link, store, share and otherwise make available certain information, text, graphics, or other material. You are responsible for content that you post to the service, including its legality, reliability, and appropriateness.</p>
+                    <div class="glass-feature-card neumorphic-3d p-4 mb-4 text-start">
+                        <h4 class="fw-bold mb-3"><i class="fa-solid fa-gavel text-danger me-2"></i>3. Limitations of Liability</h4>
+                        <p class="text-muted">WanderLand is a platform for sharing experiences and is not liable for any disputes, damages, or issues arising from bookings or interactions between users.</p>
+                    </div>
 
-                    <h2 class="h4 mb-3">Prohibited Uses</h2>
-                    <p>You may not use our service:</p>
-                    <ul>
-                        <li>For any unlawful purpose or to solicit others to perform unlawful acts</li>
-                        <li>To violate any international, federal, provincial, or state regulations, rules, laws, or local ordinances</li>
-                        <li>To infringe upon or violate our intellectual property rights or the intellectual property rights of others</li>
-                        <li>To harass, abuse, insult, harm, defame, slander, disparage, intimidate, or discriminate</li>
-                        <li>To submit false or misleading information</li>
-                    </ul>
-
-                    <h2 class="h4 mb-3">Termination</h2>
-                    <p>We may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p>
-
-                    <h2 class="h4 mb-3">Disclaimer</h2>
-                    <p>The information on this website is provided on an 'as is' basis. To the fullest extent permitted by law, WanderLust excludes all representations, warranties, conditions and terms whether express or implied, statutory or otherwise.</p>
-
-                    <h2 class="h4 mb-3">Contact Information</h2>
-                    <p>If you have any questions about these Terms of Service, please contact us at terms@wanderlust.com.</p>
-
-                    <p class="text-muted mt-4">Last updated: <%= new Date().toLocaleDateString() %></p>
+                    <div class="mt-5 text-center">
+                        <p class="small text-muted">Last updated: April 17, 2026</p>
+                        <a href="/home" class="glass-btn secondary mt-2">Back to Home</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -15,6 +15,7 @@ const flash = require("connect-flash");
 const User = require("./models/user.js");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 // Import Routes
 const listingRoutes = require("./route/listing.js");
@@ -78,6 +79,44 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "/auth/google/callback",
+    proxy: true
+  },
+  async (accessToken, refreshToken, profile, done) => {
+    try {
+        let user = await User.findOne({ googleId: profile.id });
+        if (!user) {
+            user = await User.findOne({ email: profile.emails[0].value });
+            if (user) {
+                user.googleId = profile.id;
+                user.isVerified = true;
+                user.isGoogleUser = true;
+                await user.save();
+            } else {
+                // Create the user if they don't exist
+                user = new User({
+                    googleId: profile.id,
+                    username: profile.displayName.replace(/\s+/g, '').toLowerCase() + Math.floor(Math.random() * 1000),
+                    email: profile.emails[0].value,
+                    isVerified: true,
+                    isGoogleUser: true
+                });
+                await user.save();
+                // Mark this as a new registration for the controller
+                user._isNewUser = true;
+            }
+        }
+        return done(null, user);
+    } catch (err) {
+        return done(err, null);
+    }
+  }
+));
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -85,6 +124,7 @@ app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currentUser = req.user;
+  res.locals.path = req.path; // Make current path available to templates
   next();
 });
 

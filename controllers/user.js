@@ -158,3 +158,80 @@ module.exports.resetPassword = async (req, res) => {
         res.redirect("/reset-password");
     }
 }
+
+module.exports.GoogleCallback = async (req, res) => {
+    const from = req.query.state; // Get the 'from' parameter from state
+    const user = req.user;
+
+    // Logic: If user came from LOGIN page but is NEW, we shouldn't have created them?
+    // Actually, the Strategy creates them. Let's check if they were just created.
+    if (from === 'login' && user._isNewUser) {
+        // User tried to login but didn't have an account
+        // We delete the newly created user and redirect to signup
+        await User.findByIdAndDelete(user._id);
+        req.logout((err) => {
+            if (err) return next(err);
+            req.flash("error", "Account not found. Please sign up first.");
+            return res.redirect("/signup");
+        });
+        return;
+    }
+
+    // If they came from signup or they are an existing user
+    const message = user._isNewUser ? "Successfully registered with Google!" : "Welcome back to WanderLand!";
+    req.flash("success", message);
+    let redirectUrl = res.locals.redirectUrl || "/listings";
+    res.redirect(redirectUrl);
+};
+
+module.exports.renderSettings = (req, res) => {
+    res.render("users/settings");
+};
+
+module.exports.changePassword = async (req, res, next) => {
+    try {
+        const { currentPassword, newPassword } = req.body;
+        const user = await User.findById(req.user._id);
+        
+        if (user.isGoogleUser && !user.salt) {
+            // Google user setting password for the first time
+            await user.setPassword(newPassword);
+            await user.save();
+            
+            // Re-login user to refresh the session with new salt/hash
+            req.login(user, (err) => {
+                if (err) return next(err);
+                req.flash("success", "Password set successfully! You can now login with your email and password as well.");
+                return res.redirect("/settings");
+            });
+        } else {
+            // Normal password change
+            await user.changePassword(currentPassword, newPassword);
+            req.flash("success", "Password changed successfully!");
+            res.redirect("/settings");
+        }
+    } catch (error) {
+        req.flash("error", error.message);
+        res.redirect("/settings");
+    }
+};
+
+module.exports.deleteAccount = async (req, res) => {
+    try {
+        const { confirmUsername } = req.body;
+        if (confirmUsername !== req.user.username) {
+            req.flash("error", "Username does not match. Account deletion cancelled.");
+            return res.redirect("/settings");
+        }
+
+        await User.findByIdAndDelete(req.user._id);
+        req.logout((err) => {
+            if (err) return next(err);
+            req.flash("success", "Account deleted successfully. We're sad to see you go!");
+            res.redirect("/listings");
+        });
+    } catch (error) {
+        req.flash("error", "Failed to delete account.");
+        res.redirect("/settings");
+    }
+};

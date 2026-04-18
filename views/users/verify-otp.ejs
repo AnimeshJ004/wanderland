@@ -1,17 +1,35 @@
 <%- layout("/layouts/boilerplate") %>
 
-<div class="row mt-3">
-    <h2 class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-10 offset-1 signup-title">Verify Your Email</h2>
-    <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-10 offset-1 signup-container">
-        <form action="/verify-otp" method="POST" class="needs-validation signup-form" novalidate>
-            <div class="mb-3">
-                <label for="otp" class="form-label">Enter OTP</label>
-                <input type="text" class="form-control" id="otp" name="otp" required maxlength="6" pattern="[0-9]{6}">
-                <div class="invalid-feedback">Please enter a valid 6-digit OTP.</div>
-                <div class="valid-feedback">OTP looks good!</div>
+<div class="auth-page-wrapper">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100 py-5">
+        <div class="auth-glass-card neumorphic-3d animate-in">
+            <div class="auth-header text-center mb-4">
+                <div class="auth-logo mb-3">
+                    <i class="fa-solid fa-envelope-circle-check fa-3x text-gradient"></i>
+                </div>
+                <h2 class="auth-title">Verify Your Email</h2>
+                <p class="auth-subtitle">We've sent a 6-digit code to your email.</p>
             </div>
-            <button type="submit" class="btn btn-primary sign-btn">Verify</button>
-        </form>
+
+            <form action="/verify-otp" method="POST" class="needs-validation auth-form" novalidate>
+                <div class="mb-4 auth-input-group">
+                    <label for="otp" class="form-label ps-2">Enter 6-Digit OTP</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-key input-icon"></i>
+                        <input type="text" class="form-control glass-input text-center fs-4 fw-bold letter-spacing-10" id="otp" name="otp" required maxlength="6" pattern="[0-9]{6}" placeholder="0 0 0 0 0 0" style="letter-spacing: 5px;">
+                    </div>
+                    <div class="invalid-feedback">Please enter a valid 6-digit OTP.</div>
+                </div>
+
+                <button type="submit" class="glass-btn primary w-100 m-0 mb-3">
+                    <span class="btn-text">Verify & Continue</span>
+                    <i class="fa-solid fa-circle-check ms-2"></i>
+                </button>
+            </form>
+
+            <div class="auth-footer text-center mt-4">
+                <p>Didn't receive the code? <a href="/resend-otp" class="text-gradient fw-bold">Resend OTP</a></p>
+            </div>
+        </div>
     </div>
 </div>
-<p class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-10 offset-1 mb-3 mt-3 signup-link">Didn't receive OTP? <a href="/resend-otp">Resend OTP</a></p>

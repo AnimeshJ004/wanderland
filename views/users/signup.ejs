@@ -1,35 +1,65 @@
 <%- layout("/layouts/boilerplate") %>
 
-<div class="row mt-3">
-    <h2 class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-10 offset-1 signup-title">SignUP on WanderLand</h2>
-    <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-10 offset-1 signup-container">
-        <form action="/signup" method="POST" class="needs-validation signup-form" novalidate>
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
-                <div class="invalid-feedback">Please choose a username. </div>
-                <div class="valid-feedback">Username looks good!</div>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-                <div class="invalid-feedback">Please provide a valid email. </div>
-                <div class="valid-feedback">Email looks good!</div>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <div class="input-group">
-                    <input type="password" class="form-control" id="password" name="password" required>
-                    <button class="btn btn-outline-secondary toggle-password" type="button">
-                        <i class="fas fa-eye"></i>
-                    </button>
+<div class="auth-page-wrapper">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100 py-5">
+        <div class="auth-glass-card neumorphic-3d animate-in">
+            <div class="auth-header text-center mb-4">
+                <div class="auth-logo mb-3">
+                    <i class="fa-solid fa-compass fa-3x text-gradient"></i>
                 </div>
-                <div class="invalid-feedback">Please provide a password. </div>
-                <div class="valid-feedback">Password looks good!</div>
+                <h2 class="auth-title">Join WanderLand</h2>
+                <p class="auth-subtitle">Create an account to start your journey</p>
             </div>
-            <button type="submit" class="btn btn-primary sign-btn">Sign Up</button>
-        </form>
 
+            <form action="/signup" method="POST" class="needs-validation signup-form" novalidate>
+                <div class="mb-3 auth-input-group">
+                    <label for="username" class="form-label">Username</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-user input-icon"></i>
+                        <input type="text" class="form-control glass-input" id="username" name="username" placeholder="Choose a username" required>
+                    </div>
+                    <div class="invalid-feedback">Please choose a username.</div>
+                </div>
+
+                <div class="mb-3 auth-input-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-envelope input-icon"></i>
+                        <input type="email" class="form-control glass-input" id="email" name="email" placeholder="name@example.com" required>
+                    </div>
+                    <div class="invalid-feedback">Please provide a valid email.</div>
+                </div>
+
+                <div class="mb-4 auth-input-group">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" class="form-control glass-input border-end-0" id="password" name="password" placeholder="Create a password" required>
+                        <button class="btn glass-toggle-btn toggle-password" type="button">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="invalid-feedback">Please provide a password.</div>
+                </div>
+
+                <button type="submit" class="glass-btn primary w-100 m-0 mb-3">
+                    <span class="btn-text">Sign Up</span>
+                    <i class="fa-solid fa-arrow-right ms-2"></i>
+                </button>
+            </form>
+
+            <div class="auth-separator my-4">
+                <span>OR</span>
+            </div>
+
+            <a href="/auth/google?from=signup" class="glass-btn secondary w-100 m-0 d-flex align-items-center justify-content-center gap-2 mb-4">
+                <img src="https://authjs.dev/img/providers/google.svg" alt="Google" width="20">
+                <span>Sign up with Google</span>
+            </a>
+
+            <div class="auth-footer text-center">
+                <p>Already have an account? <a href="/login" class="text-gradient fw-bold">Log in</a></p>
+            </div>
+        </div>
     </div>
 </div>
-<p class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-10 offset-1 mb-3 mt-3 signup-link">Already have an account?<a href="/login"> Log in </a></p>

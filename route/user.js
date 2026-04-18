@@ -3,8 +3,8 @@ const router = express.Router();
 const User = require("../models/user.js");
 const wrapAsync = require("../util/wrapAsync.js");
 const passport = require("passport");
-const { saveredircturl } = require("../middleware.js");
-const { PostUser, LoginUser, LogoutUser, forgotPassword, resetPassword } = require("../controllers/user.js");
+const { saveredircturl, isLoggedIn } = require("../middleware.js");
+const { PostUser, LoginUser, LogoutUser, forgotPassword, resetPassword, GoogleCallback, renderSettings, changePassword, deleteAccount } = require("../controllers/user.js");
 const { resendOTP, verifyOTP } = require("../controllers/otp.js");
 
 // Middleware to trim input fields
@@ -44,6 +44,26 @@ router.get("/resend-otp", wrapAsync(resendOTP));
 
 //Logout logic
 router.get("/logout", LogoutUser);
+
+// Settings routes
+router.get("/settings", isLoggedIn, renderSettings);
+router.post("/settings/change-password", isLoggedIn, wrapAsync(changePassword));
+router.post("/settings/delete-account", isLoggedIn, wrapAsync(deleteAccount));
+
+// Google Auth routes
+router.get("/auth/google", (req, res, next) => {
+    const { from } = req.query;
+    passport.authenticate("google", { 
+        scope: ["profile", "email"],
+        state: from // Use state to pass the 'from' parameter
+    })(req, res, next);
+});
+
+router.get("/auth/google/callback", 
+    saveredircturl,
+    passport.authenticate("google", { failureRedirect: "/login", failureFlash: true }),
+    GoogleCallback
+);
 
 //Forgot password routes
 router.route("/forgot-password")
