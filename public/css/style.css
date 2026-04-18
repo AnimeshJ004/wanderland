@@ -11,7 +11,6 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    will-change: transform;
     overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
@@ -187,22 +186,215 @@ body {
 }
 
 /* Mobile Responsive */
+/* Mobile Responsive Adjustments */
 @media (max-width: 991.98px) {
+    .nav-floating-wrapper {
+        padding: 0 15px;
+        top: 10px;
+    }
+
+    .glass-pill-nav {
+        padding: 5px 10px !important;
+        border-radius: 25px !important;
+    }
+
+    .navbar-brand .brand-text {
+        font-size: 1.1rem;
+    }
+
+    .logo-icon-box {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+
+    .navbar-collapse {
+        background: rgba(255, 255, 255, 0.98);
+        border-radius: 20px;
+        margin-top: 10px;
+        padding: 15px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
     .navbar-nav {
-        text-align: center;
-        margin-top: 1rem;
-        background-color: white !important;
+        gap: 5px;
     }
 
-    .navbar-nav .nav-link {
-        margin: 0.5rem 0;
-        padding: 0.75rem 1rem;
+    .nav-pill-link {
+        padding: 10px 15px !important;
+        text-align: left;
     }
 
-    .search-container.active .search-input {
-        width: 200px;
+    .search-pill-container {
+        width: 100% !important;
+        margin-bottom: 15px;
+    }
+
+    .main-content-wrapper {
+        padding-top: 80px;
+    }
+
+    .listings-header {
+        padding: 20px;
+        border-radius: 20px;
+        margin-bottom: 2rem !important;
+    }
+
+    .glass-title {
+        font-size: 2rem;
+    }
+
+    .tax-toggle-wrapper {
+        text-align: left !important;
+        margin-top: 15px;
+    }
+    
+    .tax-toggle-pill {
+        width: 100%;
+        justify-content: space-between;
     }
 }
+
+@media (max-width: 991.98px) {
+    .detail-meta {
+        flex-direction: column;
+        gap: 20px !important;
+        padding: 20px !important;
+    }
+
+    .meta-item.ms-auto {
+        margin-left: 0 !important;
+        text-align: left !important;
+    }
+
+    .price-tag {
+        text-align: left !important;
+    }
+
+    .detail-btns {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .glass-input-group {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        gap: 10px;
+    }
+
+    .glass-input-group .glass-input {
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .glass-btn-sm {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .detail-body {
+        padding: 25px 20px !important;
+    }
+
+    .detail-title {
+        font-size: 1.8rem;
+    }
+
+    .detail-actions {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px;
+        border-radius: 50px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .review-item {
+        padding: 1.5rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .glass-listing-detail-card {
+        border-radius: 25px;
+    }
+
+    .detail-img-wrapper {
+        height: 35vh;
+    }
+
+    .badge-glass.lg {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+
+    .detail-description h4 {
+        font-size: 1.25rem;
+    }
+
+    .detail-description p {
+        font-size: 0.95rem;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .container-fluid {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .row-cols-1 > * {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .detail-title {
+        font-size: 1.5rem;
+    }
+
+    .icon-box-lg {
+        width: 80px;
+        height: 80px;
+    }
+
+    .icon-box-lg i {
+        font-size: 2rem;
+    }
+}
+
+/* Base styles cleanup and refinements */
+.navbar-toggler:focus,
+.mobile-more-btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.listing-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.listing-link:hover {
+    color: inherit;
+}
+
+/* Ensure images are responsive */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 
 /* Footer */
 .f-info-links a{
