@@ -1,4 +1,5 @@
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit-00C7B7?style=for-the-badge&logo=vercel)](https://wanderland-indol.vercel.app/home))
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit-00C7B7?style=for-the-badge&logo=vercel)](https://wanderland-indol.vercel.app/home)
+
 Wanderland ✈️
 [A one-sentence description of what your project does. e.g., "A full-stack web application for booking travel accommodations and sharing experiences."]
 
