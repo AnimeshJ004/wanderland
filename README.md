@@ -1,8 +1,14 @@
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit-00C7B7?style=for-the-badge&logo=vercel)](https://wanderland-indol.vercel.app/home))
 Wanderland ✈️
 [A one-sentence description of what your project does. e.g., "A full-stack web application for booking travel accommodations and sharing experiences."]
 
 🚀 Live Demo
 (https://wanderland-indol.vercel.app/home)
+
+## 📸 Screenshots
+<img width="1365" height="598" alt="Screenshot 2026-05-23 183207" src="https://github.com/user-attachments/assets/567ccb28-cb9a-40d2-8595-5498cb3ce106" />
+<img width="1365" height="596" alt="Screenshot 2026-05-23 183241" src="https://github.com/user-attachments/assets/685b0b69-c25f-46f7-9171-6689bca4b5d1" />
+<img width="391" height="589" alt="image" src="https://github.com/user-attachments/assets/7ac28df8-8a82-4e71-b869-903b9307bf0a" />
 
 ✨ Key Features
 [Feature 1]: [Briefly describe the feature, e.g., "User Authentication (Sign Up / Log In)"]
