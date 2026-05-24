@@ -1,28 +1,40 @@
+<div align="center">
+# ✈️ Wanderland
+ 
+**A full-stack travel and hotel discovery platform where users can explore destinations, list accommodations, share reviews, and book stays — all in one place.**
+ 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit-00C7B7?style=for-the-badge&logo=vercel)](https://wanderland-indol.vercel.app/home)
-
-Wanderland ✈️
-"A full-stack web application for booking travel accommodations and sharing experiences."
-
-🚀 Live Demo
-(https://wanderland-indol.vercel.app/home)
-
+[![Node.js](https://img.shields.io/badge/Node.js-22.x-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
+[![Express](https://img.shields.io/badge/Express-5.x-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
+ 
+</div>
+---
+ 
 ## 📸 Screenshots
-<img width="1365" height="598" alt="Screenshot 2026-05-23 183207" src="https://github.com/user-attachments/assets/567ccb28-cb9a-40d2-8595-5498cb3ce106" />
-<img width="1365" height="596" alt="Screenshot 2026-05-23 183241" src="https://github.com/user-attachments/assets/685b0b69-c25f-46f7-9171-6689bca4b5d1" />
-<img width="391" height="589" alt="image" src="https://github.com/user-attachments/assets/7ac28df8-8a82-4e71-b869-903b9307bf0a" />
-
-✨ Features
-
-**User Authentication** — Secure sign-up / login with Passport.js local strategy, plus one-click Google OAuth2 sign-in.
-**OTP Email Verification** — Account registration is protected by a one-time password sent via the Brevo (Sendinblue) email API.
-**Hotel Listings (Full CRUD)** — Any authenticated user can create, view, edit, and delete their own accommodation listings.
-**Image Uploads** — Listing images are stored on Cloudinary via Multer middleware, keeping the server stateless.
-**Reviews & Ratings** — Guests can leave star ratings and written reviews on any listing, with ownership-based edit/delete controls.
-**Joi Schema Validation** — All incoming form data is validated server-side with Joi before hitting the database.
-**Session Management** — Sessions are persisted in MongoDB via connect-mongo, surviving server restarts.
-**Flash Messages** — User-friendly success/error notifications on every action using connect-flash.
-**Responsive UI** — Built with Bootstrap 5 and EJS templates, works seamlessly on mobile and desktop.
-**Deployed on Vercel** — Live and accessible via a public URL with vercel.json configuration included.
+ 
+<!-- Replace the URLs below with your actual screenshot paths after uploading to the repo -->
+| Home Page | Listing Detail | User Dashboard |
+|-----------|---------------|----------------|
+| ![Home](./public/screenshots/home.png) | ![Detail](./public/screenshots/detail.png) | ![Dashboard](./public/screenshots/dashboard.png) |
+ 
+> **Live demo →** [wanderland-indol.vercel.app](https://wanderland-indol.vercel.app/home)
+ 
+---
+ 
+## ✨ Features
+ 
+- **User Authentication** — Secure sign-up / login with Passport.js local strategy, plus one-click **Google OAuth2** sign-in.
+- **OTP Email Verification** — Account registration is protected by a one-time password sent via the Brevo (Sendinblue) email API.
+- **Hotel Listings (Full CRUD)** — Any authenticated user can create, view, edit, and delete their own accommodation listings.
+- **Image Uploads** — Listing images are stored on **Cloudinary** via Multer middleware, keeping the server stateless.
+- **Reviews & Ratings** — Guests can leave star ratings and written reviews on any listing, with ownership-based edit/delete controls.
+- **Joi Schema Validation** — All incoming form data is validated server-side with Joi before hitting the database.
+- **Session Management** — Sessions are persisted in MongoDB via `connect-mongo`, surviving server restarts.
+- **Flash Messages** — User-friendly success/error notifications on every action using `connect-flash`.
+- **Responsive UI** — Built with Bootstrap 5 and EJS templates, works seamlessly on mobile and desktop.
+- **Deployed on Vercel** — Live and accessible via a public URL with `vercel.json` configuration included.
+---
 
 ## 🛠️ Tech Stack
  
