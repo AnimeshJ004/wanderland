@@ -11,22 +11,54 @@ Wanderland ✈️
 <img width="1365" height="596" alt="Screenshot 2026-05-23 183241" src="https://github.com/user-attachments/assets/685b0b69-c25f-46f7-9171-6689bca4b5d1" />
 <img width="391" height="589" alt="image" src="https://github.com/user-attachments/assets/7ac28df8-8a82-4e71-b869-903b9307bf0a" />
 
-✨ Key Features
-[Feature 1]: [Briefly describe the feature, e.g., "User Authentication (Sign Up / Log In)"]
-[Feature 2]: [e.g., "Browse and filter listings"]
-[Feature 3]: [e.g., "Create, read, update, and delete (CRUD) operations for listings"]
-[Feature 4]: [e.g., "Users can post reviews and ratings"]
-[Feature 5]: [e.g., "Responsive design for mobile and desktop"]
-💻 Technologies Used
-Frontend
-[e.g., EJS templates]
-[e.g., CSS / Bootstrap]
-[e.g., Cloudinary for image uploads]
-Backend
-[e.g., Node.js]
-[e.g., Express.js]
-[e.g., MongoDB with Mongoose]
-[e.g., Passport.js for authentication]
+✨ Features
+
+**User Authentication** — Secure sign-up / login with Passport.js local strategy, plus one-click Google OAuth2 sign-in.
+**OTP Email Verification** — Account registration is protected by a one-time password sent via the Brevo (Sendinblue) email API.
+**Hotel Listings (Full CRUD)** — Any authenticated user can create, view, edit, and delete their own accommodation listings.
+**Image Uploads** — Listing images are stored on Cloudinary via Multer middleware, keeping the server stateless.
+**Reviews & Ratings** — Guests can leave star ratings and written reviews on any listing, with ownership-based edit/delete controls.
+**Joi Schema Validation** — All incoming form data is validated server-side with Joi before hitting the database.
+**Session Management** — Sessions are persisted in MongoDB via connect-mongo, surviving server restarts.
+**Flash Messages** — User-friendly success/error notifications on every action using connect-flash.
+**Responsive UI** — Built with Bootstrap 5 and EJS templates, works seamlessly on mobile and desktop.
+**Deployed on Vercel** — Live and accessible via a public URL with vercel.json configuration included.
+
+## 🛠️ Tech Stack
+ 
+| Layer | Technology |
+|-------|-----------|
+| **Runtime** | Node.js 22.x |
+| **Framework** | Express.js 5.x |
+| **Templating** | EJS + ejs-mate (layout engine) |
+| **Database** | MongoDB Atlas + Mongoose 8.x |
+| **Authentication** | Passport.js (Local + Google OAuth2) |
+| **Image Storage** | Cloudinary + Multer |
+| **Email / OTP** | Brevo (Sendinblue) API (`@getbrevo/brevo`) |
+| **Session Store** | connect-mongo |
+| **Validation** | Joi |
+| **Styling** | Bootstrap 5 |
+| **Deployment** | Vercel |
+
+## 📁 Project Structure
+ 
+```
+wanderland/
+├── controllers/        # Route handler logic (listings, reviews, users)
+├── init/               # Database seed data
+├── models/             # Mongoose schemas (User, Listing, Review)
+├── public/             # Static assets (CSS, JS, images)
+├── route/              # Express routers (listings, reviews, auth)
+├── util/               # Utility helpers (async error wrapper, etc.)
+├── views/              # EJS templates and layouts
+├── app.js              # Express app entry point
+├── cloudconfig.js      # Cloudinary configuration
+├── middleware.js        # Custom middleware (isLoggedIn, isOwner, etc.)
+├── schema.js           # Joi validation schemas
+└── vercel.json         # Vercel deployment config
+```
+ 
+---
 
 ## Environment Variables
 
@@ -66,3 +98,21 @@ Run the application:
 
 npm start
 (This might be npm run dev or require running the frontend and backend separately)
+
+## 🤝 Contributing
+ 
+Contributions, issues, and feature requests are welcome! Feel free to open an [issue](https://github.com/AnimeshJ004/wanderland/issues) or submit a pull request.
+ 
+---
+ 
+## 👨‍💻 Author
+ 
+**Animesh Jain**
+- GitHub: [@AnimeshJ004](https://github.com/AnimeshJ004)
+- LinkedIn: [animesh-jain06](https://www.linkedin.com/in/animesh-jain06)
+---
+ 
+<div align="center">
+Made with ❤️ by Animesh Jain
+</div>
+ 
