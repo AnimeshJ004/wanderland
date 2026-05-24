@@ -14,9 +14,12 @@
 ## 📸 Screenshots
  
 <!-- Replace the URLs below with your actual screenshot paths after uploading to the repo -->
-| Home Page | Listing Detail | User Dashboard |
+| Home Page | AI Chat | User Dashboard |
 |-----------|---------------|----------------|
-| ![Home](./public/screenshots/home.png) | ![Detail](./public/screenshots/detail.png) | ![Dashboard](./public/screenshots/dashboard.png) |
+| ![Home](<img width="1363" height="602" alt="Screenshot 2026-05-24 085305" src="https://github.com/user-attachments/assets/c57175ae-94a0-409b-a15c-393d64ca0980" />
+) | ![Ai Chat](<img width="305" height="467" alt="Screenshot 2026-05-24 085315" src="https://github.com/user-attachments/assets/37b3f10c-8dad-43ae-bbb1-99210c6bd25d" />
+) | ![Dashboard](<img width="1365" height="598" alt="Screenshot 2026-05-24 085325" src="https://github.com/user-attachments/assets/f99dd080-57da-45ed-a7fa-b661d2d1b0a9" />
+) |
  
 > **Live demo →** [wanderland-indol.vercel.app](https://wanderland-indol.vercel.app/home)
  
